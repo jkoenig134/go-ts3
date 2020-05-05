@@ -1,12 +1,12 @@
 package go_ts3_http
 
-type Status struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
-}
+import (
+	"encoding/json"
+	"fmt"
+)
 
-type WhoamiBody struct {
-	ClientChannelId               string `json:"client_channel_id"`
+type WhoamiInfo struct {
+	ClientChannelId               int    `json:"client_channel_id,string"`
 	ClientDatabaseId              string `json:"client_database_id"`
 	ClientId                      string `json:"client_id"`
 	ClientLoginName               string `json:"client_login_name"`
@@ -19,24 +19,18 @@ type WhoamiBody struct {
 	VirtualserverUniqueIdentifier string `json:"virtualserver_unique_identifier"`
 }
 
-type Whoami struct {
-	WhoamiInfo []WhoamiBody `json:"body"`
-	Status     Status       `json:"status"`
-}
-
-//TODO remove
-type Placeholder struct {
-	Status Status `json:"status"`
-}
-
-func (c *Client) Whoami() (*Whoami, error) {
-	whoami := &Whoami{}
-	err := c.request("whoami", whoami)
+func (c *Client) Whoami() (*WhoamiInfo, error) {
+	body, err := c.request("whoami")
 	if err != nil {
 		return nil, err
 	}
 
-	return whoami, nil
+	var whoami []WhoamiInfo
+	if err = json.Unmarshal(*body, &whoami); err != nil {
+		return nil, err
+	}
+
+	return &whoami[0], nil
 }
 
 type User struct {
@@ -51,19 +45,18 @@ func (u *User) IsBot() bool {
 	return u.ClientType == "1"
 }
 
-type ClientList struct {
-	Users  []User `json:"body"`
-	Status Status `json:"status"`
-}
-
-func (c *Client) ClientList(server int) (*ClientList, error) {
-	clientList := &ClientList{}
-	err := c.request(vServerUrl(server, "clientlist"), clientList)
+func (c *Client) ClientList(server int) (*[]User, error) {
+	body, err := c.request(vServerUrl(server, "clientlist"))
 	if err != nil {
 		return nil, err
 	}
 
-	return clientList, nil
+	var users []User
+	if err = json.Unmarshal(*body, &users); err != nil {
+		return nil, err
+	}
+
+	return &users, nil
 }
 
 type Channel struct {
@@ -75,18 +68,39 @@ type Channel struct {
 	TotalClients                string `json:"total_clients"`
 }
 
-type ChannelList struct {
-	Channels []Channel `json:"body"`
-	Status   Status    `json:"status"`
-}
-
-func (c *Client) ChannelList(server int) (*ChannelList, error) {
-	channelList := &ChannelList{}
-
-	err := c.request(vServerUrl(server, "channellist"), channelList)
+func (c *Client) ChannelList(server int) (*[]Channel, error) {
+	body, err := c.request(vServerUrl(server, "channellist"))
 	if err != nil {
 		return nil, err
 	}
 
-	return channelList, nil
+	fmt.Println(string(*body))
+
+	var channels []Channel
+	if err = json.Unmarshal(*body, &channels); err != nil {
+		return nil, err
+	}
+
+	return &channels, nil
+}
+
+type Version struct {
+	//"build":"1585305527","platform":"Linux","version":"3.12.1"
+	Build    string `json:"build"`
+	Platform string `json:"platform"`
+	Version  string `json:"version"`
+}
+
+func (c *Client) Version() (*Version, error) {
+	body, err := c.request("version")
+	if err != nil {
+		return nil, err
+	}
+
+	var whoami []Version
+	if err = json.Unmarshal(*body, &whoami); err != nil {
+		return nil, err
+	}
+
+	return &whoami[0], nil
 }

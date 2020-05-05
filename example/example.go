@@ -29,18 +29,28 @@ func init() {
 	config := ts3.NewConfig(
 		viper.GetString("baseUrl"),
 		viper.GetString("apiKey"),
-		viper.GetBool("debug"),
 	)
 
 	client = ts3.NewClient(config)
 }
 
 func main() {
+	version, err := client.Version()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Printf("%+v\n", version)
+
 	whoami, _ := client.Whoami()
 	fmt.Printf("%+v\n", whoami)
 
-	clientList, _ := client.ChannelList(1)
-	for _, user := range clientList.Channels {
+	clientList, err := client.ChannelList(1)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for _, user := range *clientList {
 		fmt.Printf("%+v\n", user)
 	}
 }
