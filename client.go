@@ -18,13 +18,13 @@ func NewConfig(baseUrl string, apiKey string) Config {
 	}
 }
 
-type Client struct {
+type TeamspeakHttpClient struct {
 	config     Config
 	httpClient fasthttp.Client
 }
 
-func NewClient(config Config) Client {
-	return Client{
+func NewClient(config Config) TeamspeakHttpClient {
+	return TeamspeakHttpClient{
 		config,
 		fasthttp.Client{},
 	}
@@ -40,7 +40,7 @@ type tsResponse struct {
 	Status status      `json:"status"`
 }
 
-func (c *Client) request(path string) (*[]byte, error) {
+func (c *TeamspeakHttpClient) request(path string) (*[]byte, error) {
 	url := fmt.Sprintf("%s/%s", c.config.baseUrl, path)
 
 	request := fasthttp.AcquireRequest()

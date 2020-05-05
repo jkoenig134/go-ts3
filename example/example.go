@@ -22,7 +22,7 @@ func createViperConfig() {
 	}
 }
 
-var client ts3.Client
+var client ts3.TeamspeakHttpClient
 
 func init() {
 	createViperConfig()

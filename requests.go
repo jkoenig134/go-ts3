@@ -19,7 +19,7 @@ type WhoamiInfo struct {
 	VirtualserverUniqueIdentifier string `json:"virtualserver_unique_identifier"`
 }
 
-func (c *Client) Whoami() (*WhoamiInfo, error) {
+func (c *TeamspeakHttpClient) Whoami() (*WhoamiInfo, error) {
 	body, err := c.request("whoami")
 	if err != nil {
 		return nil, err
@@ -45,7 +45,7 @@ func (u *User) IsBot() bool {
 	return u.ClientType == "1"
 }
 
-func (c *Client) ClientList(server int) (*[]User, error) {
+func (c *TeamspeakHttpClient) ClientList(server int) (*[]User, error) {
 	body, err := c.request(vServerUrl(server, "clientlist"))
 	if err != nil {
 		return nil, err
@@ -68,7 +68,7 @@ type Channel struct {
 	TotalClients                string `json:"total_clients"`
 }
 
-func (c *Client) ChannelList(server int) (*[]Channel, error) {
+func (c *TeamspeakHttpClient) ChannelList(server int) (*[]Channel, error) {
 	body, err := c.request(vServerUrl(server, "channellist"))
 	if err != nil {
 		return nil, err
@@ -91,7 +91,7 @@ type Version struct {
 	Version  string `json:"version"`
 }
 
-func (c *Client) Version() (*Version, error) {
+func (c *TeamspeakHttpClient) Version() (*Version, error) {
 	body, err := c.request("version")
 	if err != nil {
 		return nil, err
