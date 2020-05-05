@@ -93,10 +93,10 @@ func (c *TeamspeakHttpClient) Version() (*Version, error) {
 		return nil, err
 	}
 
-	var whoami []Version
-	if err = json.Unmarshal(*body, &whoami); err != nil {
+	var version []Version
+	if err = json.Unmarshal(*body, &version); err != nil {
 		return nil, err
 	}
 
-	return &whoami[0], nil
+	return &version[0], nil
 }
