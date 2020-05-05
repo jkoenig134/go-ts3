@@ -35,22 +35,13 @@ func init() {
 }
 
 func main() {
-	version, err := client.Version()
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	fmt.Printf("%+v\n", version)
-
-	whoami, _ := client.Whoami()
-	fmt.Printf("%+v\n", whoami)
-
-	clientList, err := client.ChannelList(1)
+	clientList, err := client.ClientList(1)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	for _, user := range *clientList {
 		fmt.Printf("%+v\n", user)
+		fmt.Println(user.IsBot())
 	}
 }

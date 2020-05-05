@@ -2,19 +2,18 @@ package go_ts3_http
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 type WhoamiInfo struct {
 	ClientChannelId               int    `json:"client_channel_id,string"`
-	ClientDatabaseId              string `json:"client_database_id"`
-	ClientId                      string `json:"client_id"`
+	ClientDatabaseId              int    `json:"client_database_id,string"`
+	ClientId                      int    `json:"client_id,string"`
 	ClientLoginName               string `json:"client_login_name"`
 	ClientNickname                string `json:"client_nickname"`
-	ClientOriginServerId          string `json:"client_origin_server_id"`
+	ClientOriginServerId          int    `json:"client_origin_server_id,string"`
 	ClientUniqueIdentifier        string `json:"client_unique_identifier"`
-	VirtualserverId               string `json:"virtualserver_id"`
-	VirtualserverPort             string `json:"virtualserver_port"`
+	VirtualserverId               int    `json:"virtualserver_id,string"`
+	VirtualserverPort             int    `json:"virtualserver_port,string"`
 	VirtualserverStatus           string `json:"virtualserver_status"`
 	VirtualserverUniqueIdentifier string `json:"virtualserver_unique_identifier"`
 }
@@ -34,15 +33,15 @@ func (c *TeamspeakHttpClient) Whoami() (*WhoamiInfo, error) {
 }
 
 type Client struct {
-	ChannelId        string `json:"cid"`
-	ClientId         string `json:"clid"`
-	ClientDatabaseId string `json:"client_database_id"`
+	ChannelId        int    `json:"cid,string"`
+	ClientId         int    `json:"clid,string"`
+	ClientDatabaseId int    `json:"client_database_id,string"`
 	ClientNickname   string `json:"client_nickname"`
-	ClientType       string `json:"client_type"`
+	ClientType       int    `json:"client_type,string"`
 }
 
 func (u *Client) IsBot() bool {
-	return u.ClientType == "1"
+	return u.ClientType == 1
 }
 
 func (c *TeamspeakHttpClient) ClientList(server int) (*[]Client, error) {
@@ -61,11 +60,11 @@ func (c *TeamspeakHttpClient) ClientList(server int) (*[]Client, error) {
 
 type Channel struct {
 	ChannelName                 string `json:"channel_name"`
-	ChannelNeededSubscribePower string `json:"channel_needed_subscribe_power"`
-	ChannelOrder                string `json:"channel_order"`
-	ChannelId                   string `json:"cid"`
-	PID                         string `json:"pid"`
-	TotalClients                string `json:"total_clients"`
+	ChannelNeededSubscribePower int    `json:"channel_needed_subscribe_power,string"`
+	ChannelOrder                int    `json:"channel_order,string"`
+	ChannelId                   int    `json:"cid,string"`
+	PID                         int    `json:"pid,string"`
+	TotalClients                int    `json:"total_clients,string"`
 }
 
 func (c *TeamspeakHttpClient) ChannelList(server int) (*[]Channel, error) {
@@ -73,8 +72,6 @@ func (c *TeamspeakHttpClient) ChannelList(server int) (*[]Channel, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	fmt.Println(string(*body))
 
 	var channels []Channel
 	if err = json.Unmarshal(*body, &channels); err != nil {
@@ -85,7 +82,6 @@ func (c *TeamspeakHttpClient) ChannelList(server int) (*[]Channel, error) {
 }
 
 type Version struct {
-	//"build":"1585305527","platform":"Linux","version":"3.12.1"
 	Build    string `json:"build"`
 	Platform string `json:"platform"`
 	Version  string `json:"version"`
