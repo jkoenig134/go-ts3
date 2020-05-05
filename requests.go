@@ -33,7 +33,7 @@ func (c *TeamspeakHttpClient) Whoami() (*WhoamiInfo, error) {
 	return &whoami[0], nil
 }
 
-type User struct {
+type Client struct {
 	ChannelId        string `json:"cid"`
 	ClientId         string `json:"clid"`
 	ClientDatabaseId string `json:"client_database_id"`
@@ -41,17 +41,17 @@ type User struct {
 	ClientType       string `json:"client_type"`
 }
 
-func (u *User) IsBot() bool {
+func (u *Client) IsBot() bool {
 	return u.ClientType == "1"
 }
 
-func (c *TeamspeakHttpClient) ClientList(server int) (*[]User, error) {
+func (c *TeamspeakHttpClient) ClientList(server int) (*[]Client, error) {
 	body, err := c.request(vServerUrl(server, "clientlist"))
 	if err != nil {
 		return nil, err
 	}
 
-	var users []User
+	var users []Client
 	if err = json.Unmarshal(*body, &users); err != nil {
 		return nil, err
 	}
