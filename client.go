@@ -43,7 +43,7 @@ type tsResponse struct {
 	Status status      `json:"status"`
 }
 
-func (c *TeamspeakHttpClient) request(path string) (*[]byte, error) {
+func (c *TeamspeakHttpClient) request(path string, v interface{}) error {
 	url := fmt.Sprintf("%s/%s", c.config.baseUrl, path)
 
 	request := fasthttp.AcquireRequest()
@@ -56,7 +56,7 @@ func (c *TeamspeakHttpClient) request(path string) (*[]byte, error) {
 
 	err := c.httpClient.Do(request, response)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	stringBody := string(response.Body())
@@ -64,17 +64,17 @@ func (c *TeamspeakHttpClient) request(path string) (*[]byte, error) {
 
 	if code != 200 {
 		err = fmt.Errorf("Error Code: %d\n%s", code, stringBody)
-		return nil, err
+		return err
 	}
 
 	tsResponse := &tsResponse{}
 	err = json.Unmarshal(response.Body(), tsResponse)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	if tsResponse.Status.Code != 0 {
-		return nil, fmt.Errorf(
+		return fmt.Errorf(
 			"Query returned non 0 exit code: '%d'. Message: '%s'\n",
 			tsResponse.Status.Code,
 			tsResponse.Status.Message)
@@ -82,10 +82,14 @@ func (c *TeamspeakHttpClient) request(path string) (*[]byte, error) {
 
 	jsonBody, err := json.Marshal(tsResponse.Body)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return &jsonBody, nil
+	if err = json.Unmarshal(jsonBody, v); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func vServerUrl(id int, path string) string {

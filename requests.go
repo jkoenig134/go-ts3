@@ -1,9 +1,5 @@
 package go_ts3_http
 
-import (
-	"encoding/json"
-)
-
 type WhoamiInfo struct {
 	ClientChannelId               int    `json:"client_channel_id,string"`
 	ClientDatabaseId              int    `json:"client_database_id,string"`
@@ -19,13 +15,9 @@ type WhoamiInfo struct {
 }
 
 func (c *TeamspeakHttpClient) Whoami() (*WhoamiInfo, error) {
-	body, err := c.request("whoami")
-	if err != nil {
-		return nil, err
-	}
-
 	var whoami []WhoamiInfo
-	if err = json.Unmarshal(*body, &whoami); err != nil {
+	err := c.request("whoami", &whoami)
+	if err != nil {
 		return nil, err
 	}
 
@@ -45,13 +37,9 @@ func (u *Client) IsBot() bool {
 }
 
 func (c *TeamspeakHttpClient) ClientList(server int) (*[]Client, error) {
-	body, err := c.request(vServerUrl(server, "clientlist"))
-	if err != nil {
-		return nil, err
-	}
-
 	var users []Client
-	if err = json.Unmarshal(*body, &users); err != nil {
+	err := c.request(vServerUrl(server, "clientlist"), &users)
+	if err != nil {
 		return nil, err
 	}
 
@@ -68,13 +56,9 @@ type Channel struct {
 }
 
 func (c *TeamspeakHttpClient) ChannelList(server int) (*[]Channel, error) {
-	body, err := c.request(vServerUrl(server, "channellist"))
-	if err != nil {
-		return nil, err
-	}
-
 	var channels []Channel
-	if err = json.Unmarshal(*body, &channels); err != nil {
+	err := c.request(vServerUrl(server, "channellist"), &channels)
+	if err != nil {
 		return nil, err
 	}
 
@@ -88,13 +72,9 @@ type Version struct {
 }
 
 func (c *TeamspeakHttpClient) Version() (*Version, error) {
-	body, err := c.request("version")
-	if err != nil {
-		return nil, err
-	}
-
 	var version []Version
-	if err = json.Unmarshal(*body, &version); err != nil {
+	err := c.request("version", &version)
+	if err != nil {
 		return nil, err
 	}
 
