@@ -34,6 +34,53 @@ func init() {
 	))
 }
 
+func main() {
+	hostInfo()
+}
+
+func hostInfo() {
+	hostInfo, err := client.HostInfo()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", *hostInfo)
+}
+
+func help() {
+	help, err := client.Help("clientlist")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", *help)
+}
+
+func channelList() {
+	channelList, err := client.ChannelList(1)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for _, channel := range *channelList {
+		fmt.Printf("%+v\n", channel)
+	}
+}
+
+func clientList() {
+	clientList, err := client.ClientList(1)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	for _, client := range *clientList {
+		fmt.Printf("%+v\n", client)
+		fmt.Println(client.IsBot())
+	}
+}
+
 type Filter struct {
 	Offset int64  `schema:"offset,omitempty"`
 	Limit  int64  `schema:"limit,required"`
@@ -47,7 +94,7 @@ type Filter struct {
 	Status    string `schema:"status,omitempty"`
 }
 
-func main() {
+func encoding() {
 	filter := Filter{
 		Offset: 123,
 		SortBy: "asd",
@@ -63,14 +110,4 @@ func main() {
 	}
 
 	fmt.Printf("%s\n", form.Encode())
-
-	clientList, err := client.ClientList(1)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-	for _, user := range *clientList {
-		fmt.Printf("%+v\n", user)
-		fmt.Println(user.IsBot())
-	}
 }
