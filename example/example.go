@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	ts3 "github.com/jkoenig134/go-ts3-http"
+	"github.com/jkoenig134/schema"
 	"github.com/spf13/viper"
-	ts3 "go-ts3-http"
+	"net/url"
 )
 
 func createViperConfig() {
@@ -26,15 +28,42 @@ var client ts3.TeamspeakHttpClient
 
 func init() {
 	createViperConfig()
-	config := ts3.NewConfig(
+	client = ts3.NewClient(ts3.NewConfig(
 		viper.GetString("baseUrl"),
 		viper.GetString("apiKey"),
-	)
+	))
+}
 
-	client = ts3.NewClient(config)
+type Filter struct {
+	Offset int64  `schema:"offset,omitempty"`
+	Limit  int64  `schema:"limit,required"`
+	SortBy string `schema:"sortby,omitempty"`
+	Asc    bool   `schema:"asc,omitempty"`
+
+	//User specific filters
+	Username  string `schema:"username,omitempty"`
+	FirstName string `schema:"first_name,omitempty"`
+	LastName  string `schema:"last_name,omitempty"`
+	Status    string `schema:"status,omitempty"`
 }
 
 func main() {
+	filter := Filter{
+		Offset: 123,
+		SortBy: "asd",
+		Asc:    true,
+	}
+
+	form := url.Values{}
+	err := schema.NewEncoder().Encode(filter, form)
+	fmt.Println(err)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	fmt.Printf("%s\n", form.Encode())
+
 	clientList, err := client.ClientList(1)
 	if err != nil {
 		fmt.Println(err)
