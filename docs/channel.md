@@ -1,0 +1,24 @@
+### channel endpoints
+
+- channeladdperm `manage_scope`
+- channelclientaddperm `manage_scope`
+- channelclientdelperm `manage_scope`
+- channelclientpermlist `manage_scope, write_scope, read_scope`
+- channelcreate `manage_scope, write_scope`
+- channeldelete `manage_scope, write_scope`
+- channeldelperm `manage_scope`
+- channeledit `manage_scope, write_scope`
+- channelfind `manage_scope, write_scope, read_scope`
+- channelgroupadd `manage_scope, write_scope`
+- channelgroupaddperm `manage_scope`
+- channelgroupclientlist `manage_scope, write_scope, read_scope`
+- channelgroupcopy `manage_scope`
+- channelgroupdel `manage_scope`
+- channelgroupdelperm `manage_scope`
+- channelgrouplist `manage_scope, write_scope, read_scope`
+- channelgrouppermlist `manage_scope, write_scope, read_scope`
+- channelgrouprename `manage_scope`
+- channelinfo `manage_scope, write_scope, read_scope`
+- channellist `manage_scope, write_scope, read_scope`
+- channelmove `manage_scope, write_scope`
+- channelpermlist `manage_scope, write_scope, read_scope`

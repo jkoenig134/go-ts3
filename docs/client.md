@@ -1,0 +1,22 @@
+- clientaddperm `manage_scope`
+- clientdbdelete `manage_scope, write_scope`
+- clientdbedit `manage_scope, write_scope`
+- clientdbfind `manage_scope, write_scope, read_scope`
+- clientdbinfo `manage_scope, write_scope, read_scope`
+- clientdblist `manage_scope, write_scope, read_scope`
+- clientdelperm `manage_scope`
+- clientedit `manage_scope, write_scope`
+- clientfind `manage_scope, write_scope, read_scope`
+- clientgetdbidfromuid `manage_scope, write_scope, read_scope`
+- clientgetids `manage_scope, write_scope, read_scope`
+- clientgetnamefromdbid `manage_scope, write_scope, read_scope`
+- clientgetnamefromuid `manage_scope, write_scope, read_scope,} },
+- clientgetuidfromclid `manage_scope, write_scope, read_scope`
+- clientinfo `manage_scope, write_scope, read_scope`
+- clientkick `manage_scope, write_scope`
+- clientlist `manage_scope, write_scope, read_scope`
+- clientmove `manage_scope, write_scope`
+- clientpermlist `manage_scope, write_scope, read_scope`
+- clientpoke `manage_scope, write_scope`
+- clientsetserverquerylogin `manage_scope, write_scope`
+- clientupdate `manage_scope, write_scope`

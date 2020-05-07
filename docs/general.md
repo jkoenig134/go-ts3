@@ -1,0 +1,6 @@
+- gm `manage_scope`
+- help `manage_scope, write_scope, read_scope`
+- hostinfo `manage_scope, write_scope, read_scope`
+- version `manage_scope, write_scope, read_scope`
+- whoami `manage_scope, write_scope, read_scope`
+- bindinglist `manage_scope, read_scope`
