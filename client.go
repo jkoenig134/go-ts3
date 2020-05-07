@@ -75,7 +75,7 @@ func (c *TeamspeakHttpClient) request(path string, v interface{}) error {
 
 	if tsResponse.Status.Code != 0 {
 		return fmt.Errorf(
-			"Query returned non 0 exit code: '%d'. Message: '%s'\n",
+			"Query returned non 0 exit code: '%d'. Message: '%s' ",
 			tsResponse.Status.Code,
 			tsResponse.Status.Message)
 	}
