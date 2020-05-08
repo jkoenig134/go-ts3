@@ -45,7 +45,7 @@ type tsResponse struct {
 	Status status      `json:"status"`
 }
 
-func (c *TeamspeakHttpClient) request(path string, parameters *interface{}, v interface{}) error {
+func (c *TeamspeakHttpClient) request(path string, parameters interface{}, v interface{}) error {
 	stringParams := ""
 
 	if parameters != nil {
@@ -56,11 +56,15 @@ func (c *TeamspeakHttpClient) request(path string, parameters *interface{}, v in
 			return err
 		}
 
-		stringParams = fmt.Sprintf("?%s", form.Encode())
+		encoded := form.Encode()
+
+		if encoded != "" {
+			fmt.Println(form.Encode())
+			stringParams = fmt.Sprintf("?%s", encoded)
+		}
 	}
 
 	requestUrl := fmt.Sprintf("%s/%s%s", c.config.baseUrl, path, stringParams)
-
 	request := fasthttp.AcquireRequest()
 	request.Header.Set("x-api-key", c.config.apiKey)
 	request.SetRequestURI(requestUrl)

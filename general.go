@@ -92,9 +92,12 @@ type Binding struct {
 }
 
 // bindinglist `manage_scope, read_scope`
-func (c *TeamspeakHttpClient) BindingList() (*[]Binding, error) {
-	var Bindings []Binding
-	//c.request(fmt.Sprintf(""))
+func (c *TeamspeakHttpClient) BindingList(request BindingListRequest) (*[]Binding, error) {
+	var bindings []Binding
+	err := c.request("bindinglist", request, &bindings)
+	if err != nil {
+		return nil, err
+	}
 
-	return &Bindings, nil
+	return &bindings, nil
 }

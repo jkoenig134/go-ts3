@@ -35,7 +35,21 @@ func init() {
 }
 
 func main() {
-	encoding()
+	binding()
+}
+
+func binding() {
+	bindings, err := client.BindingList(ts3.BindingListRequest{
+		Subsystem: ts3.VOICE,
+	})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	for _, binding := range *bindings {
+		fmt.Printf("%+v\n", binding)
+	}
 }
 
 func hostInfo() {
