@@ -28,3 +28,8 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 | server | ❌ |
 | servergroup | ❌ | 
 | token | ❌ |
+
+### roadmap
+
+- implement all endpoints
+- implement a parser like `schema`, but just for encoding and with `ts3:` scope
