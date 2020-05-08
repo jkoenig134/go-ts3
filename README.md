@@ -5,6 +5,8 @@ see `example/example.go`
 
 ### available endpoints (from `docs`)
 
+Endpoints as described in [here](https://community.teamspeak.com/t/webquery-discussion-help-3-12-0-onwards/7184).
+
 - ❌ `not started`
 - ✔ `implemented`
 - ⚠ `work in progress`
@@ -16,7 +18,7 @@ see `example/example.go`
 | channel | ❌ |
 | client | ❌ |
 | complain | ❌ |
-| general |  |
+| general | ⚠ |
 | instance | ❌ |
 | log | ❌ |
 | message | ❌ |
