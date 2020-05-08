@@ -1,21 +1,5 @@
 package go_ts3_http
 
-import "fmt"
-
-// gm `manage_scope`
-//TODO: gm
-
-// help `manage_scope, write_scope, read_scope`
-func (c *TeamspeakHttpClient) Help(command string) (*string, error) {
-	var help string
-	err := c.request(fmt.Sprintf("help/%s", command), &help)
-	if err != nil {
-		return nil, err
-	}
-
-	return &help, nil
-}
-
 type HostInfo struct {
 	ConnectionBandwidthReceivedLastMinuteTotal int `json:"connection_bandwidth_received_last_minute_total,string"`
 	ConnectionBandwidthReceivedLastSecondTotal int `json:"connection_bandwidth_received_last_second_total,string"`
@@ -40,7 +24,7 @@ type HostInfo struct {
 // hostinfo `manage_scope, write_scope, read_scope`
 func (c *TeamspeakHttpClient) HostInfo() (*HostInfo, error) {
 	var hostInfo []HostInfo
-	err := c.request("hostinfo", &hostInfo)
+	err := c.request("hostinfo", nil, &hostInfo)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +41,7 @@ type Version struct {
 // version `manage_scope, write_scope, read_scope`
 func (c *TeamspeakHttpClient) Version() (*Version, error) {
 	var version []Version
-	err := c.request("version", &version)
+	err := c.request("version", nil, &version)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +66,7 @@ type WhoamiInfo struct {
 // whoami `manage_scope, write_scope, read_scope`
 func (c *TeamspeakHttpClient) Whoami() (*WhoamiInfo, error) {
 	var whoami []WhoamiInfo
-	err := c.request("whoami", &whoami)
+	err := c.request("whoami", nil, &whoami)
 	if err != nil {
 		return nil, err
 	}
@@ -90,5 +74,27 @@ func (c *TeamspeakHttpClient) Whoami() (*WhoamiInfo, error) {
 	return &whoami[0], nil
 }
 
+type Subsystem string
+
+//noinspection GoUnusedConst
+const (
+	VOICE        Subsystem = "voice"
+	QUERY        Subsystem = "query"
+	FILETRANSFER Subsystem = "filetransfer"
+)
+
+type BindingListRequest struct {
+	Subsystem Subsystem `schema:"subsystem,omitempty"`
+}
+
+type Binding struct {
+	IP string `json:"ip"`
+}
+
 // bindinglist `manage_scope, read_scope`
-// TODO: bindinglist
+func (c *TeamspeakHttpClient) BindingList() (*[]Binding, error) {
+	var Bindings []Binding
+	//c.request(fmt.Sprintf(""))
+
+	return &Bindings, nil
+}

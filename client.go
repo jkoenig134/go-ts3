@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/asaskevich/EventBus"
+	"github.com/jkoenig134/schema"
 	"github.com/valyala/fasthttp"
+	"net/url"
 )
 
 type Config struct {
@@ -43,12 +45,25 @@ type tsResponse struct {
 	Status status      `json:"status"`
 }
 
-func (c *TeamspeakHttpClient) request(path string, v interface{}) error {
-	url := fmt.Sprintf("%s/%s", c.config.baseUrl, path)
+func (c *TeamspeakHttpClient) request(path string, parameters *interface{}, v interface{}) error {
+	stringParams := ""
+
+	if parameters != nil {
+		form := url.Values{}
+		err := schema.NewEncoder().Encode(parameters, form)
+
+		if err != nil {
+			return err
+		}
+
+		stringParams = fmt.Sprintf("?%s", form.Encode())
+	}
+
+	requestUrl := fmt.Sprintf("%s/%s%s", c.config.baseUrl, path, stringParams)
 
 	request := fasthttp.AcquireRequest()
 	request.Header.Set("x-api-key", c.config.apiKey)
-	request.SetRequestURI(url)
+	request.SetRequestURI(requestUrl)
 	defer fasthttp.ReleaseRequest(request)
 
 	response := fasthttp.AcquireResponse()

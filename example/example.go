@@ -35,7 +35,7 @@ func init() {
 }
 
 func main() {
-	hostInfo()
+	encoding()
 }
 
 func hostInfo() {
@@ -46,16 +46,6 @@ func hostInfo() {
 	}
 
 	fmt.Printf("%+v\n", *hostInfo)
-}
-
-func help() {
-	help, err := client.Help("clientlist")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	fmt.Printf("%+v\n", *help)
 }
 
 func channelList() {
@@ -96,6 +86,7 @@ type Filter struct {
 
 func encoding() {
 	filter := Filter{
+		Limit:  1,
 		Offset: 123,
 		SortBy: "asd",
 		Asc:    true,

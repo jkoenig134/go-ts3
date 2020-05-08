@@ -14,7 +14,7 @@ func (u *Client) IsBot() bool {
 
 func (c *TeamspeakHttpClient) ClientList(server int) (*[]Client, error) {
 	var users []Client
-	err := c.request(vServerUrl(server, "clientlist"), &users)
+	err := c.request(vServerUrl(server, "clientlist"), nil, &users)
 	if err != nil {
 		return nil, err
 	}
@@ -33,7 +33,7 @@ type Channel struct {
 
 func (c *TeamspeakHttpClient) ChannelList(server int) (*[]Channel, error) {
 	var channels []Channel
-	err := c.request(vServerUrl(server, "channellist"), &channels)
+	err := c.request(vServerUrl(server, "channellist"), nil, &channels)
 	if err != nil {
 		return nil, err
 	}
