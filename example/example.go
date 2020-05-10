@@ -36,6 +36,15 @@ func init() {
 
 func main() {
 	binding()
+	gm()
+}
+
+func gm() {
+	err := client.GlobalMessage("[b]asd asdanflk[/b] \n jnueoindaeo")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 }
 
 func binding() {
