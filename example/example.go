@@ -35,8 +35,28 @@ func init() {
 }
 
 func main() {
-	binding()
-	gm()
+	messageList()
+}
+
+func messageList() {
+	err, asd := client.MessageList()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Println(asd)
+}
+
+func sendMessage() {
+	err := client.SendChannelMessage("[b]asd asdanflk[/b] \n jnueoindaeo")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	err = client.SendClientMessage(16, "[b]asd asdanflk[/b] \n jnueoindaeo")
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func gm() {
@@ -72,7 +92,7 @@ func hostInfo() {
 }
 
 func channelList() {
-	channelList, err := client.ChannelList(1)
+	channelList, err := client.ChannelList()
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -83,7 +103,7 @@ func channelList() {
 }
 
 func clientList() {
-	clientList, err := client.ClientList(1)
+	clientList, err := client.ClientList()
 	if err != nil {
 		fmt.Println(err)
 		return

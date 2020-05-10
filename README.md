@@ -18,10 +18,10 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 | channel | ❌ |
 | client | ❌ |
 | complain | ❌ |
-| general | ⚠ |
+| general | ✔ |
 | instance | ❌ |
 | log | ❌ |
-| message | ❌ |
+| message | ✔ |
 | permission | ❌ |
 | privilegekey | ❌ |
 | querylogin | ❌ |

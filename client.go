@@ -25,6 +25,11 @@ type TeamspeakHttpClient struct {
 	httpClient fasthttp.Client
 	eventBus   EventBus.Bus
 	encoder    schema.Encoder
+	serverID   int
+}
+
+func (c *TeamspeakHttpClient) SetServerID(serverID int) {
+	c.serverID = serverID
 }
 
 func NewClient(config Config) TeamspeakHttpClient {
@@ -33,6 +38,7 @@ func NewClient(config Config) TeamspeakHttpClient {
 		fasthttp.Client{},
 		EventBus.New(),
 		*schema.NewEncoder(),
+		1,
 	}
 }
 
@@ -60,12 +66,11 @@ func (c *TeamspeakHttpClient) requestWithParams(path string, paramStruct interfa
 	}
 
 	merged := fmt.Sprintf("%s%s", path, param)
-	fmt.Println(merged)
 	return c.request(merged, v)
 }
 
 func (c *TeamspeakHttpClient) request(path string, v interface{}) error {
-	requestUrl := fmt.Sprintf("%s/%s", c.config.baseUrl, path)
+	requestUrl := fmt.Sprintf("%s/%d/%s", c.config.baseUrl, c.serverID, path)
 	request := fasthttp.AcquireRequest()
 	request.Header.Set("x-api-key", c.config.apiKey)
 	request.SetRequestURI(requestUrl)
@@ -105,6 +110,7 @@ func (c *TeamspeakHttpClient) request(path string, v interface{}) error {
 	if err != nil {
 		return err
 	}
+	fmt.Println(jsonBody)
 
 	if err = json.Unmarshal(jsonBody, v); err != nil {
 		return err
@@ -113,6 +119,6 @@ func (c *TeamspeakHttpClient) request(path string, v interface{}) error {
 	return nil
 }
 
-func vServerUrl(id int, path string) string {
+/*func vServerUrl(id int, path string) string {
 	return fmt.Sprintf("%d/%s", id, path)
-}
+}*/

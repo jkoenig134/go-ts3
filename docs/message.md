@@ -1,5 +1,6 @@
 ### message endpoints
 
+- gm `manage_scope`
 - messageadd `manage_scope, write_scope`
 - messagedel `manage_scope, write_scope`
 - messageget `manage_scope, write_scope, read_scope`

@@ -12,9 +12,9 @@ func (u *Client) IsBot() bool {
 	return u.ClientType == 1
 }
 
-func (c *TeamspeakHttpClient) ClientList(server int) (*[]Client, error) {
+func (c *TeamspeakHttpClient) ClientList() (*[]Client, error) {
 	var users []Client
-	err := c.request(vServerUrl(server, "clientlist"), &users)
+	err := c.request("clientlist", &users)
 	if err != nil {
 		return nil, err
 	}
@@ -31,9 +31,9 @@ type Channel struct {
 	TotalClients                int    `json:"total_clients,string"`
 }
 
-func (c *TeamspeakHttpClient) ChannelList(server int) (*[]Channel, error) {
+func (c *TeamspeakHttpClient) ChannelList() (*[]Channel, error) {
 	var channels []Channel
-	err := c.request(vServerUrl(server, "channellist"), &channels)
+	err := c.request("channellist", &channels)
 	if err != nil {
 		return nil, err
 	}
