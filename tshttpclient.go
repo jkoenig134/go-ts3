@@ -110,7 +110,9 @@ func (c *TeamspeakHttpClient) request(path string, v interface{}) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(jsonBody)
+
+	//TODO remove
+	fmt.Println(string(jsonBody))
 
 	if err = json.Unmarshal(jsonBody, v); err != nil {
 		return err
