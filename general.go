@@ -24,7 +24,7 @@ type HostInfo struct {
 // hostinfo `manage_scope, write_scope, read_scope`
 func (c *TeamspeakHttpClient) HostInfo() (*HostInfo, error) {
 	var hostInfo []HostInfo
-	err := c.request("hostinfo", nil, &hostInfo)
+	err := c.request("hostinfo", &hostInfo)
 	if err != nil {
 		return nil, err
 	}
@@ -41,7 +41,7 @@ type Version struct {
 // version `manage_scope, write_scope, read_scope`
 func (c *TeamspeakHttpClient) Version() (*Version, error) {
 	var version []Version
-	err := c.request("version", nil, &version)
+	err := c.request("version", &version)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ type WhoamiInfo struct {
 // whoami `manage_scope, write_scope, read_scope`
 func (c *TeamspeakHttpClient) Whoami() (*WhoamiInfo, error) {
 	var whoami []WhoamiInfo
-	err := c.request("whoami", nil, &whoami)
+	err := c.request("whoami", &whoami)
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ type Binding struct {
 // bindinglist `manage_scope, read_scope`
 func (c *TeamspeakHttpClient) BindingList(request BindingListRequest) (*[]Binding, error) {
 	var bindings []Binding
-	err := c.request("bindinglist", request, &bindings)
+	err := c.requestWithParams("bindinglist", request, &bindings)
 	if err != nil {
 		return nil, err
 	}

@@ -6,7 +6,6 @@ import (
 	"github.com/asaskevich/EventBus"
 	"github.com/jkoenig134/schema"
 	"github.com/valyala/fasthttp"
-	"net/url"
 )
 
 type Config struct {
@@ -25,6 +24,7 @@ type TeamspeakHttpClient struct {
 	config     Config
 	httpClient fasthttp.Client
 	eventBus   EventBus.Bus
+	encoder    schema.Encoder
 }
 
 func NewClient(config Config) TeamspeakHttpClient {
@@ -32,6 +32,7 @@ func NewClient(config Config) TeamspeakHttpClient {
 		config,
 		fasthttp.Client{},
 		EventBus.New(),
+		*schema.NewEncoder(),
 	}
 }
 
@@ -45,26 +46,26 @@ type tsResponse struct {
 	Status status      `json:"status"`
 }
 
-func (c *TeamspeakHttpClient) request(path string, parameters interface{}, v interface{}) error {
-	stringParams := ""
+func (t *tsResponse) asError() error {
+	return fmt.Errorf(
+		"Query returned non 0 exit code: '%d'. Message: '%s' ",
+		t.Status.Code,
+		t.Status.Message)
+}
 
-	if parameters != nil {
-		form := url.Values{}
-		err := schema.NewEncoder().Encode(parameters, form)
-
-		if err != nil {
-			return err
-		}
-
-		encoded := form.Encode()
-
-		if encoded != "" {
-			fmt.Println(form.Encode())
-			stringParams = fmt.Sprintf("?%s", encoded)
-		}
+func (c *TeamspeakHttpClient) requestWithParams(path string, paramStruct interface{}, v interface{}) error {
+	param, err := c.encodeStruct(paramStruct)
+	if err != nil {
+		return err
 	}
 
-	requestUrl := fmt.Sprintf("%s/%s%s", c.config.baseUrl, path, stringParams)
+	merged := fmt.Sprintf("%s%s", path, param)
+	fmt.Println(merged)
+	return c.request(merged, v)
+}
+
+func (c *TeamspeakHttpClient) request(path string, v interface{}) error {
+	requestUrl := fmt.Sprintf("%s/%s", c.config.baseUrl, path)
 	request := fasthttp.AcquireRequest()
 	request.Header.Set("x-api-key", c.config.apiKey)
 	request.SetRequestURI(requestUrl)
@@ -93,10 +94,11 @@ func (c *TeamspeakHttpClient) request(path string, parameters interface{}, v int
 	}
 
 	if tsResponse.Status.Code != 0 {
-		return fmt.Errorf(
-			"Query returned non 0 exit code: '%d'. Message: '%s' ",
-			tsResponse.Status.Code,
-			tsResponse.Status.Message)
+		return tsResponse.asError()
+	}
+
+	if v == nil {
+		return nil
 	}
 
 	jsonBody, err := json.Marshal(tsResponse.Body)
