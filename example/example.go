@@ -35,13 +35,37 @@ func init() {
 }
 
 func main() {
-	messageList()
+	apikeylist()
+}
+
+func apikeyadd() {
+	newKey, err := client.ApiKeyAdd(ts3.ApiKeyAddRequest{
+		Scope: ts3.MANAGE,
+	})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", newKey)
+}
+
+func apikeylist() {
+	client.SetServerID(0)
+	list, err := client.ApiKeyList(ts3.ApiKeyListRequest{})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", list)
 }
 
 func messageList() {
-	err, asd := client.MessageList()
+	asd, err := client.MessageList()
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 
 	fmt.Println(asd)
