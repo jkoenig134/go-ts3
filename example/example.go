@@ -37,6 +37,34 @@ func init() {
 func main() {
 }
 
+func querylogin() {
+	login, err := client.QueryloginAddGlobal("thethinggoesskrr")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Printf("%+v\n", login)
+
+	queryloginlist()
+
+	err = client.QueryloginDeleteGlobal(6)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	queryloginlist()
+}
+
+func queryloginlist() {
+	logins, err := client.QueryloginListGlobal(ts3.QueryloginListRequest{})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Printf("%+v\n", logins)
+}
+
 //noinspection GoUnusedFunction
 func newToken() {
 	token, err := client.TokenAdd(ts3.NewGroupToken(6, "added by go-ts3-http"))
