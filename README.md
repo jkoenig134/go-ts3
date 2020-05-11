@@ -23,11 +23,11 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 | log | ❌ |
 | message | ✔ |
 | permission | ❌ |
-| privilegekey | ❌ |
+| privilegekey | ✔ |
 | querylogin | ❌ |
 | server | ❌ |
 | servergroup | ❌ | 
-| token | ❌ |
+| token | ✔ |
 
 ### roadmap
 

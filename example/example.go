@@ -35,7 +35,35 @@ func init() {
 }
 
 func main() {
-	apikeylist()
+}
+
+func newToken() {
+	token, err := client.TokenAdd(ts3.NewGroupToken(6, "added by go-ts3-http"))
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", token)
+
+	token, err = client.TokenAdd(ts3.NewChannelToken(5, 1, "added by go-ts3-http"))
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", token)
+
+}
+
+func token() {
+	tokens, err := client.TokenList()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", tokens)
 }
 
 func apikeyadd() {
