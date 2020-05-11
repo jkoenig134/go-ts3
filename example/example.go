@@ -37,6 +37,7 @@ func init() {
 func main() {
 }
 
+//noinspection GoUnusedFunction
 func newToken() {
 	token, err := client.TokenAdd(ts3.NewGroupToken(6, "added by go-ts3-http"))
 	if err != nil {
@@ -56,6 +57,7 @@ func newToken() {
 
 }
 
+//noinspection GoUnusedFunction
 func token() {
 	tokens, err := client.TokenList()
 	if err != nil {
@@ -66,6 +68,7 @@ func token() {
 	fmt.Printf("%+v\n", tokens)
 }
 
+//noinspection GoUnusedFunction
 func apikeyadd() {
 	newKey, err := client.ApiKeyAdd(ts3.ApiKeyAddRequest{
 		Scope: ts3.MANAGE,
@@ -78,6 +81,7 @@ func apikeyadd() {
 	fmt.Printf("%+v\n", newKey)
 }
 
+//noinspection GoUnusedFunction
 func apikeylist() {
 	client.SetServerID(0)
 	list, err := client.ApiKeyList(ts3.ApiKeyListRequest{})
@@ -89,6 +93,7 @@ func apikeylist() {
 	fmt.Printf("%+v\n", list)
 }
 
+//noinspection GoUnusedFunction
 func messageList() {
 	asd, err := client.MessageList()
 	if err != nil {
@@ -99,6 +104,7 @@ func messageList() {
 	fmt.Println(asd)
 }
 
+//noinspection GoUnusedFunction
 func sendMessage() {
 	err := client.SendChannelMessage("[b]asd asdanflk[/b] \n jnueoindaeo")
 	if err != nil {
@@ -111,6 +117,7 @@ func sendMessage() {
 	}
 }
 
+//noinspection GoUnusedFunction
 func gm() {
 	err := client.GlobalMessage("[b]asd asdanflk[/b] \n jnueoindaeo")
 	if err != nil {
@@ -119,6 +126,7 @@ func gm() {
 	}
 }
 
+//noinspection GoUnusedFunction
 func binding() {
 	bindings, err := client.BindingList(ts3.BindingListRequest{
 		Subsystem: ts3.VOICE,
@@ -133,6 +141,7 @@ func binding() {
 	}
 }
 
+//noinspection GoUnusedFunction
 func hostInfo() {
 	hostInfo, err := client.HostInfo()
 	if err != nil {
@@ -143,6 +152,7 @@ func hostInfo() {
 	fmt.Printf("%+v\n", *hostInfo)
 }
 
+//noinspection GoUnusedFunction
 func channelList() {
 	channelList, err := client.ChannelList()
 	if err != nil {
@@ -154,6 +164,7 @@ func channelList() {
 	}
 }
 
+//noinspection GoUnusedFunction
 func clientList() {
 	clientList, err := client.ClientList()
 	if err != nil {
@@ -179,6 +190,7 @@ type Filter struct {
 	Status    string `schema:"status,omitempty"`
 }
 
+//noinspection GoUnusedFunction
 func encoding() {
 	filter := Filter{
 		Limit:  1,
