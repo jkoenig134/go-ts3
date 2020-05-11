@@ -1,6 +1,10 @@
 package go_ts3_http
 
 // channelcreate `manage_scope, write_scope`
+func (c *TeamspeakHttpClient) ChannelCreate() error {
+	//TODO
+	return nil
+}
 
 // channeldelete `manage_scope, write_scope`
 type channelDeleteRequest struct {
@@ -25,8 +29,16 @@ func (c *TeamspeakHttpClient) ChannelDelete(channelId int, force bool) error {
 }
 
 // channeledit `manage_scope, write_scope`
+func (c *TeamspeakHttpClient) ChannelEdit() error {
+	//TODO
+	return nil
+}
 
 // channelfind `manage_scope, write_scope, read_scope`
+func (c *TeamspeakHttpClient) ChannelFind() error {
+	//TODO
+	return nil
+}
 
 // channelinfo `manage_scope, write_scope, read_scope`
 type channelInfoRequest struct {
