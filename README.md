@@ -15,7 +15,9 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 |:---|:---:|
 | apikey | ✔ |
 | ban | ✔ |
-| channel | ❌ |
+| channel | ⚠ |
+| channelgroup | ❌ |
+| channelperm | ❌ |
 | client | ❌ |
 | complain | ✔ |
 | custom | ❌ |

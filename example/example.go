@@ -35,9 +35,20 @@ func init() {
 }
 
 func main() {
-	ban()
+	channelInfo()
 }
 
+func channelInfo() {
+	info, err := client.ChannelInfo(1)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", info)
+}
+
+//noinspection GoUnusedFunction
 func ban() {
 	banlist, err := client.BanList(ts3.BanListRequest{})
 	if err != nil {
