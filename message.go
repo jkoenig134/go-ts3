@@ -94,6 +94,14 @@ type sendMessageRequest struct {
 	Message    string `schema:"msg,required"`
 }
 
+func (c *TeamspeakHttpClient) SendClientMessage(targetId int, message string) error {
+	return c.sendMessage(sendMessageRequest{
+		TargetMode: 1,
+		TargetId:   targetId,
+		Message:    message,
+	})
+}
+
 func (c *TeamspeakHttpClient) SendChannelMessage(message string) error {
 	return c.sendMessage(sendMessageRequest{
 		TargetMode: 2,
@@ -102,9 +110,9 @@ func (c *TeamspeakHttpClient) SendChannelMessage(message string) error {
 	})
 }
 
-func (c *TeamspeakHttpClient) SendClientMessage(targetId int, message string) error {
+func (c *TeamspeakHttpClient) SendVirtualServerMessage(targetId int, message string) error {
 	return c.sendMessage(sendMessageRequest{
-		TargetMode: 1,
+		TargetMode: 3,
 		TargetId:   targetId,
 		Message:    message,
 	})
