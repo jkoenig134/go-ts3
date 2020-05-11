@@ -35,9 +35,20 @@ func init() {
 }
 
 func main() {
-	complain()
+	ban()
 }
 
+func ban() {
+	banlist, err := client.BanList(ts3.BanListRequest{})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", banlist)
+}
+
+//noinspection GoUnusedFunction
 func complain() {
 	complains, err := client.ComplainList()
 	if err != nil {

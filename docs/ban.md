@@ -1,3 +1,4 @@
+### ban endpoints
 
 - banadd `manage_scope, write_scope`
 - banclient `manage_scope, write_scope`

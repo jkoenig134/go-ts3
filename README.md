@@ -14,7 +14,7 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 | endpoint doc file | status |
 |:---|:---:|
 | apikey | ✔ |
-| ban | ❌ |
+| ban | ✔ |
 | channel | ❌ |
 | client | ❌ |
 | complain | ✔ |
