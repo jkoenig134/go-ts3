@@ -35,8 +35,20 @@ func init() {
 }
 
 func main() {
+	complain()
 }
 
+func complain() {
+	complains, err := client.ComplainList()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", complains)
+}
+
+//noinspection GoUnusedFunction
 func querylogin() {
 	login, err := client.QueryloginAddGlobal("thethinggoesskrr")
 	if err != nil {
