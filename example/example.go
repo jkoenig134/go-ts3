@@ -35,9 +35,20 @@ func init() {
 }
 
 func main() {
-	channelInfo()
 }
 
+//noinspection GoUnusedFunction
+func logview() {
+	logs, err := client.LogViewInstance(1, true, 0)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", logs)
+}
+
+//noinspection GoUnusedFunction
 func channelInfo() {
 	info, err := client.ChannelInfo(1)
 	if err != nil {
