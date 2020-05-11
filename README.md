@@ -22,10 +22,10 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 | complain | ✔ |
 | custom | ❌ |
 | general | ✔ |
-| instance | ❌ |
-| log | ❌ |
+| instance | ⚠ |
+| log | ⚠ |
 | message | ✔ |
-| permission | ❌ |
+| permission | ⚠ |
 | privilegekey | ✔ |
 | querylogin | ✔ |
 | server | ❌ |
