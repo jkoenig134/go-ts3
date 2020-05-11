@@ -18,6 +18,7 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 | channel | ❌ |
 | client | ❌ |
 | complain | ❌ |
+| custom | ❌ |
 | general | ✔ |
 | instance | ❌ |
 | log | ❌ |
