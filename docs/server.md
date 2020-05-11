@@ -12,7 +12,3 @@
 - serversnapshotdeploy `manage_scope`
 - serverstart `manage_scope`
 - serverstop `manage_scope`
-- servertemppasswordadd `manage_scope, write_scope`
-- servertemppassworddel `manage_scope, write_scope`
-- servertemppasswordlist `manage_scope, write_scope, read_scope`
-- setclientchannelgroup `manage_scope, write_scope`

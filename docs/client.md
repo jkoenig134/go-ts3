@@ -20,3 +20,4 @@
 - clientpoke `manage_scope, write_scope`
 - clientsetserverquerylogin `manage_scope, write_scope`
 - clientupdate `manage_scope, write_scope`
+- setclientchannelgroup `manage_scope, write_scope`
