@@ -22,7 +22,7 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 | complain | ✔ |
 | custom | ❌ |
 | general | ✔ |
-| instance | ⚠ |
+| instance | ✔ |
 | log | ✔ |
 | message | ✔ |
 | permission | ⚠ |

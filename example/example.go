@@ -35,6 +35,17 @@ func init() {
 }
 
 func main() {
+	instanceinfo()
+}
+
+func instanceinfo() {
+	info, err := client.InstanceInfo()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", info)
 }
 
 //noinspection GoUnusedFunction
