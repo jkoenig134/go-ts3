@@ -1,3 +1,5 @@
+### client endpoints
+
 - clientaddperm `manage_scope`
 - clientdbdelete `manage_scope, write_scope`
 - clientdbedit `manage_scope, write_scope`
@@ -10,7 +12,7 @@
 - clientgetdbidfromuid `manage_scope, write_scope, read_scope`
 - clientgetids `manage_scope, write_scope, read_scope`
 - clientgetnamefromdbid `manage_scope, write_scope, read_scope`
-- clientgetnamefromuid `manage_scope, write_scope, read_scope,} },
+- clientgetnamefromuid `manage_scope, write_scope, read_scope`
 - clientgetuidfromclid `manage_scope, write_scope, read_scope`
 - clientinfo `manage_scope, write_scope, read_scope`
 - clientkick `manage_scope, write_scope`
