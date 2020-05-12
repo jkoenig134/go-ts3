@@ -28,7 +28,7 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 | permission | ⚠ |
 | privilegekey | ✔ |
 | querylogin | ✔ |
-| server | ⚠ |
+| server | ✔ |
 | servergroup | ❌ |
 | servertemppassword | ✔ |
 | token | ✔ |

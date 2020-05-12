@@ -35,9 +35,75 @@ func init() {
 }
 
 func main() {
-	instanceinfo()
 }
 
+//noinspection GoUnusedFunction
+func server() {
+	serverList()
+
+	err := client.ServerEdit(ts3.ServerEditRequest{
+		VirtualserverName: "Test789",
+	})
+	if err != nil {
+		return
+	}
+
+	serverList()
+
+	err = client.ServerEdit(ts3.ServerEditRequest{
+		VirtualserverName: "jkoenig.dev",
+	})
+	if err != nil {
+		return
+	}
+
+	serverList()
+}
+
+func serverList() {
+	serverList, err := client.ServerList()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	for _, server := range *serverList {
+		fmt.Println(server.VirtualserverName)
+	}
+}
+
+//noinspection GoUnusedFunction
+func serverSnapshot() {
+	password := "asd"
+	snap, err := client.ServerSnapshotCreate(ts3.ServerSnapshotCreateRequest{Password: password})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", snap)
+
+	deployments, err := client.ServerSnapshotDeploy(snap.AsDeployRequest(&password, true, true))
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println(deployments)
+}
+
+//noinspection GoUnusedFunction
+func channelfind() {
+	channels, err := client.ChannelFind("ein")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", channels)
+}
+
+//noinspection GoUnusedFunction
 func instanceinfo() {
 	info, err := client.InstanceInfo()
 	if err != nil {
