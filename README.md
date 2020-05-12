@@ -4,7 +4,6 @@
 see `example/example.go`
 
 ### available endpoints (from `docs`)
-
 Endpoints as described in [here](https://community.teamspeak.com/t/webquery-discussion-help-3-12-0-onwards/7184).
 
 - ❌ `not started`
@@ -15,7 +14,7 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 |:---|:---:|
 | apikey | ✔ |
 | ban | ✔ |
-| channel | ⚠ |
+| channel | ✔ |
 | channelgroup | ❌ |
 | channelperm | ❌ |
 | client | ❌ |
@@ -33,7 +32,5 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 | servertemppassword | ✔ |
 | token | ✔ |
 
-### roadmap
-
-- implement all endpoints
-- implement a parser like `schema`, but just for encoding and with `ts3:` scope
+### TODO
+- [ ] implement all endpoints

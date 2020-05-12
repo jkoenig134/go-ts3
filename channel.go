@@ -1,9 +1,43 @@
 package go_ts3_http
 
 // channelcreate `manage_scope, write_scope`
-func (c *TeamspeakHttpClient) ChannelCreate() error {
-	//TODO
-	return nil
+type ChannelCreateRequest struct {
+	ChannelName                          string `schema:"channel_name,required"`
+	ChannelTopic                         string `schema:"channel_topic,omitempty"`
+	ChannelDescription                   string `schema:"channel_description,omitempty"`
+	ChannelPassword                      string `schema:"channel_password,omitempty"`
+	ChannelCodec                         string `schema:"channel_codec,omitempty"`
+	ChannelCodecQuality                  string `schema:"channel_codec_quality,omitempty"`
+	ChannelMaxclients                    string `schema:"channel_maxclients,omitempty"`
+	ChannelMaxfamilyclients              string `schema:"channel_maxfamilyclients,omitempty"`
+	ChannelOrder                         string `schema:"channel_order,omitempty"`
+	ChannelFlagPermanent                 string `schema:"channel_flag_permanent,omitempty"`
+	ChannelFlagSemiPermanent             string `schema:"channel_flag_semi_permanent,omitempty"`
+	ChannelFlagTemporary                 string `schema:"channel_flag_temporary,omitempty"`
+	ChannelFlagDefault                   string `schema:"channel_flag_default,omitempty"`
+	ChannelFlagMaxclientsUnlimited       string `schema:"channel_flag_maxclients_unlimited,omitempty"`
+	ChannelFlagMaxfamilyclientsUnlimited string `schema:"channel_flag_maxfamilyclients_unlimited,omitempty"`
+	ChannelFlagMaxfamilyclientsInherited string `schema:"channel_flag_maxfamilyclients_inherited,omitempty"`
+	ChannelNeededTalkPower               string `schema:"channel_needed_talk_power,omitempty"`
+	ChannelNamePhonetic                  string `schema:"channel_name_phonetic,omitempty"`
+	ChannelIconID                        string `schema:"channel_icon_id,omitempty"`
+	ChannelCodecIsUnencrypted            string `schema:"channel_codec_is_unencrypted,omitempty"`
+	ChannelParentId                      string `schema:"cpid,omitempty"`
+}
+
+type channelCreateResponse struct {
+	ChannelId int `json:"cid,string"`
+}
+
+func (c *TeamspeakHttpClient) ChannelCreate(request ChannelCreateRequest) (*int, error) {
+	var responses []channelCreateResponse
+
+	err := c.requestWithParams("channelcreate", request, &responses)
+	if err != nil {
+		return nil, err
+	}
+
+	return &responses[0].ChannelId, nil
 }
 
 // channeldelete `manage_scope, write_scope`
@@ -29,15 +63,58 @@ func (c *TeamspeakHttpClient) ChannelDelete(channelId int, force bool) error {
 }
 
 // channeledit `manage_scope, write_scope`
-func (c *TeamspeakHttpClient) ChannelEdit() error {
-	//TODO
-	return nil
+type ChannelEditRequest struct {
+	ChannelId                            int    `schema:"cid,required"`
+	ChannelName                          string `schema:"channel_name,omitempty"`
+	ChannelTopic                         string `schema:"channel_topic,omitempty"`
+	ChannelDescription                   string `schema:"channel_description,omitempty"`
+	ChannelPassword                      string `schema:"channel_password,omitempty"`
+	ChannelCodec                         string `schema:"channel_codec,omitempty"`
+	ChannelCodecQuality                  string `schema:"channel_codec_quality,omitempty"`
+	ChannelMaxclients                    string `schema:"channel_maxclients,omitempty"`
+	ChannelMaxfamilyclients              string `schema:"channel_maxfamilyclients,omitempty"`
+	ChannelOrder                         string `schema:"channel_order,omitempty"`
+	ChannelFlagPermanent                 string `schema:"channel_flag_permanent,omitempty"`
+	ChannelFlagSemiPermanent             string `schema:"channel_flag_semi_permanent,omitempty"`
+	ChannelFlagTemporary                 string `schema:"channel_flag_temporary,omitempty"`
+	ChannelFlagDefault                   string `schema:"channel_flag_default,omitempty"`
+	ChannelFlagMaxclientsUnlimited       string `schema:"channel_flag_maxclients_unlimited,omitempty"`
+	ChannelFlagMaxfamilyclientsUnlimited string `schema:"channel_flag_maxfamilyclients_unlimited,omitempty"`
+	ChannelFlagMaxfamilyclientsInherited string `schema:"channel_flag_maxfamilyclients_inherited,omitempty"`
+	ChannelNeededTalkPower               string `schema:"channel_needed_talk_power,omitempty"`
+	ChannelNamePhonetic                  string `schema:"channel_name_phonetic,omitempty"`
+	ChannelIconID                        string `schema:"channel_icon_id,omitempty"`
+	ChannelCodecIsUnencrypted            string `schema:"channel_codec_is_unencrypted,omitempty"`
+	ChannelParentId                      string `schema:"cpid,omitempty"`
+}
+
+func (c *TeamspeakHttpClient) ChannelEdit(request ChannelEditRequest) error {
+	return c.requestWithParams("channeledit", request, nil)
 }
 
 // channelfind `manage_scope, write_scope, read_scope`
-func (c *TeamspeakHttpClient) ChannelFind() error {
-	//TODO
-	return nil
+type channelFindRequest struct {
+	Pattern string `schema:"pattern"`
+}
+
+type ChannelFindResponse struct {
+	ChannelName string `json:"channel_name"`
+	ChannelId   int    `json:"cid,string"`
+}
+
+func (c *TeamspeakHttpClient) ChannelFind(pattern string) (*[]ChannelFindResponse, error) {
+	var channels []ChannelFindResponse
+
+	err := c.requestWithParams(
+		"channelfind",
+		channelFindRequest{Pattern: pattern},
+		&channels,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &channels, nil
 }
 
 // channelinfo `manage_scope, write_scope, read_scope`
