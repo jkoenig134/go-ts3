@@ -120,7 +120,3 @@ func (c *TeamspeakHttpClient) request(path string, v interface{}) error {
 
 	return nil
 }
-
-/*func vServerUrl(id int, path string) string {
-	return fmt.Sprintf("%d/%s", id, path)
-}*/
