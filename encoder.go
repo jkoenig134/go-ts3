@@ -5,13 +5,6 @@ import (
 	"net/url"
 )
 
-/*
-stringParams, err := c.encodeStruct(parameters)
-	if err != nil {
-		return err
-	}
-*/
-
 func (c *TeamspeakHttpClient) encodeStruct(v interface{}) (string, error) {
 	if v == nil {
 		empty := ""
