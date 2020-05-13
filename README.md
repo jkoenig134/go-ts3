@@ -34,3 +34,4 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 
 ### TODO
 - [ ] implement all endpoints
+- [x] implement an event system based on raw (until events for the http api gets announced)

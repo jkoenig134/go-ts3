@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/asaskevich/EventBus"
+	"github.com/jkoenig134/go-ts3-http/rawevent"
 	"github.com/jkoenig134/schema"
 	"github.com/valyala/fasthttp"
 )
@@ -21,15 +22,20 @@ func NewConfig(baseUrl string, apiKey string) Config {
 }
 
 type TeamspeakHttpClient struct {
-	config     Config
-	httpClient fasthttp.Client
-	eventBus   EventBus.Bus
-	encoder    schema.Encoder
-	serverID   int
+	config      Config
+	httpClient  fasthttp.Client
+	eventBus    EventBus.Bus
+	encoder     schema.Encoder
+	serverID    int
+	eventClient *rawevent.EventClient
 }
 
 func (c *TeamspeakHttpClient) SetServerID(serverID int) {
 	c.serverID = serverID
+
+	if c.eventClient != nil {
+		c.eventClient.SwitchServer(serverID)
+	}
 }
 
 func NewClient(config Config) TeamspeakHttpClient {
@@ -39,6 +45,7 @@ func NewClient(config Config) TeamspeakHttpClient {
 		EventBus.New(),
 		*schema.NewEncoder(),
 		1,
+		nil,
 	}
 }
 
