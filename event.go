@@ -2,7 +2,7 @@ package go_ts3_http
 
 import (
 	"github.com/jkoenig134/go-ts3-http/rawevent"
-	"github.com/spf13/viper"
+	"time"
 )
 
 type TeamspeakEvent string
@@ -23,16 +23,13 @@ const (
 	TokenUsed                 = "notifytokenused"
 )
 
-func (c *TeamspeakHttpClient) StartEventClient() error {
-	client, err := rawevent.Start(
-		viper.GetString("eventHost"),
-		viper.GetString("eventUser"),
-		viper.GetString("eventPassword"),
-		c.eventBus,
-	)
+func (c *TeamspeakHttpClient) StartEventClient(host, user, password string) error {
+	client, err := rawevent.Start(host, user, password, c.eventBus)
 	if err != nil {
 		return err
 	}
+
+	time.Sleep(2 * time.Second)
 
 	client.SwitchServer(c.serverID)
 

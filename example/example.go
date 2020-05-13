@@ -38,9 +38,32 @@ func init() {
 }
 
 func main() {
-	printIfNoError(client.ClientDbInfo(31))
+	event()
 }
 
+func event() {
+	err := client.SubscribeEvent(ts3.ClientMoved, func(v interface{}) {
+		fmt.Println(v)
+	})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	err = client.StartEventClient(
+		viper.GetString("eventHost"),
+		viper.GetString("eventUser"),
+		viper.GetString("eventPassword"),
+	)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	_, _ = fmt.Scanf("Type to exit")
+}
+
+//noinspection GoUnusedFunction
 func printIfNoError(v interface{}, err error) {
 	if err != nil {
 		fmt.Println(err)
