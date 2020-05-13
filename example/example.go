@@ -35,6 +35,16 @@ func init() {
 }
 
 func main() {
+	printIfNoError(client.ClientDbInfo(31))
+}
+
+func printIfNoError(v interface{}, err error) {
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v\n", v)
 }
 
 //noinspection GoUnusedFunction
