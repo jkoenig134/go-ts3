@@ -55,28 +55,18 @@ func (c *TeamspeakHttpClient) logView(request logViewRequest) (*[]Log, error) {
 }
 
 func (c *TeamspeakHttpClient) LogViewInstance(lines int, reverse bool, beginPos int) (*[]Log, error) {
-	reverseInt := 0
-	if reverse {
-		reverseInt = 1
-	}
-
 	return c.logView(logViewRequest{
 		Lines:    lines,
-		Reverse:  reverseInt,
+		Reverse:  boolToInt(reverse),
 		Instance: 1,
 		BeginPos: beginPos,
 	})
 }
 
 func (c *TeamspeakHttpClient) LogViewVirtualServer(lines int, reverse bool, beginPos int) (*[]Log, error) {
-	reverseInt := 0
-	if reverse {
-		reverseInt = 1
-	}
-
 	return c.logView(logViewRequest{
 		Lines:    lines,
-		Reverse:  reverseInt,
+		Reverse:  boolToInt(reverse),
 		Instance: 0,
 		BeginPos: beginPos,
 	})

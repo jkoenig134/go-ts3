@@ -47,16 +47,11 @@ type channelDeleteRequest struct {
 }
 
 func (c *TeamspeakHttpClient) ChannelDelete(channelId int, force bool) error {
-	forceInt := 0
-	if force {
-		forceInt = 1
-	}
-
 	return c.requestWithParams(
 		"channeldelete",
 		channelDeleteRequest{
 			ChannelId: channelId,
-			Force:     forceInt,
+			Force:     boolToInt(force),
 		},
 		nil,
 	)

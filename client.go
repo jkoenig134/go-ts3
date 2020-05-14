@@ -11,17 +11,13 @@ type clientAddPermissionRequest struct {
 }
 
 func (c *TeamspeakHttpClient) ClientAddPermission(clientDbId, permissionId, permissionValue int, permSkip bool) error {
-	permSkipInt := 0
-	if permSkip {
-		permSkipInt = 1
-	}
 	return c.requestWithParams(
 		"clientaddperm",
 		clientAddPermissionRequest{
 			ClientDbId:      clientDbId,
 			PermissionId:    permissionId,
 			PermissionValue: permissionValue,
-			PermSkip:        permSkipInt,
+			PermSkip:        boolToInt(permSkip),
 		},
 		nil,
 	)
@@ -35,17 +31,13 @@ type clientAddStringPermissionRequest struct {
 }
 
 func (c *TeamspeakHttpClient) ClientAddStringPermission(clientDbId int, permissionName string, permissionValue int, permSkip bool) error {
-	permSkipInt := 0
-	if permSkip {
-		permSkipInt = 1
-	}
 	return c.requestWithParams(
 		"clientaddperm",
 		clientAddStringPermissionRequest{
 			ClientDbId:      clientDbId,
 			PermissionName:  permissionName,
 			PermissionValue: permissionValue,
-			PermSkip:        permSkipInt,
+			PermSkip:        boolToInt(permSkip),
 		},
 		nil,
 	)
