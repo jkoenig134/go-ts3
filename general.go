@@ -78,9 +78,9 @@ type Subsystem string
 
 //noinspection GoUnusedConst
 const (
-	VOICE        Subsystem = "voice"
-	QUERY        Subsystem = "query"
-	FILETRANSFER Subsystem = "filetransfer"
+	SubsystemVoice        Subsystem = "voice"
+	SubsystemQuery        Subsystem = "query"
+	SubsystemFiletransfer Subsystem = "filetransfer"
 )
 
 type BindingListRequest struct {

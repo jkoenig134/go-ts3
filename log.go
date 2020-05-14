@@ -5,10 +5,10 @@ type TeamspeakLogLevel int
 
 //noinspection GoUnusedConst
 const (
-	FATAL   TeamspeakLogLevel = 1
-	ERROR   TeamspeakLogLevel = 2
-	WARNING TeamspeakLogLevel = 3
-	INFO    TeamspeakLogLevel = 4
+	TeamspeakLogLevelFatal   TeamspeakLogLevel = 1
+	TeamspeakLogLevelError   TeamspeakLogLevel = 2
+	TeamspeakLogLevelWarning TeamspeakLogLevel = 3
+	TeamspeakLogLevelInfo    TeamspeakLogLevel = 4
 )
 
 type LogAddRequest struct {

@@ -37,9 +37,28 @@ func (c *TeamspeakHttpClient) ChannelGroupDeletePermission() error {
 }
 
 // channelgrouplist `manage_scope, write_scope, read_scope`
-func (c *TeamspeakHttpClient) ChannelGroupList() error {
-	//TODO
-	return nil
+type ChannelGroup struct {
+	Name           string                      `json:"name"`
+	ChannelGroupId int                         `json:"cgid,string"`
+	Type           PermissionGroupDatabaseType `json:"type,string"`
+	IconId         int                         `json:"iconid,string"`
+	Namemode       int                         `json:"namemode,string"`
+	Savedb         int                         `json:"savedb,string"`
+	Sortid         int                         `json:"sortid,string"`
+	NMemberAddp    int                         `json:"n_member_addp,string"`
+	NMemberRemovep int                         `json:"n_member_removep,string"`
+	NModifyp       int                         `json:"n_modifyp,string"`
+}
+
+func (c *TeamspeakHttpClient) ChannelGroupList() (*[]ChannelGroup, error) {
+	var groups []ChannelGroup
+
+	err := c.request("channelgrouplist", &groups)
+	if err != nil {
+		return nil, err
+	}
+
+	return &groups, err
 }
 
 // channelgrouppermlist `manage_scope, write_scope, read_scope`
@@ -49,7 +68,15 @@ func (c *TeamspeakHttpClient) ChannelGroupPermissionList() error {
 }
 
 // channelgrouprename `manage_scope`
-func (c *TeamspeakHttpClient) ChannelGroupRename() error {
-	//TODO
-	return nil
+type channelGroupRenameRequest struct {
+	ChannelGroupId int    `schema:"cgid"`
+	Name           string `schema:"name"`
+}
+
+func (c *TeamspeakHttpClient) ChannelGroupRename(channelGroupId int, name string) error {
+	return c.requestWithParams(
+		"channelgrouprename",
+		channelGroupRenameRequest{ChannelGroupId: channelGroupId, Name: name},
+		nil,
+	)
 }

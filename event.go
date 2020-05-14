@@ -8,18 +8,18 @@ type TeamspeakEvent string
 
 //noinspection GoUnusedConst
 const (
-	TextMessage               = "notifytextmessage"
-	ClientEnterView           = "notifycliententerview"
-	ClientLeftView            = "notifyclientleftview"
-	ServerEdited              = "notifyserveredited"
-	ChannelEdited             = "notifychanneledited"
-	ChannelDescriptionChanged = "notifychanneldescriptionchanged"
-	ClientMoved               = "notifyclientmoved"
-	ChannelCreated            = "notifychannelcreated"
-	ChannelDeleted            = "notifychanneldeleted"
-	ChannelMoved              = "notifychannelmoved"
-	ChannelPasswordChanged    = "notifychannelpasswordchanged"
-	TokenUsed                 = "notifytokenused"
+	NotifyTextMessage               TeamspeakEvent = "notifytextmessage"
+	NotifyClientEnterView           TeamspeakEvent = "notifycliententerview"
+	NotifyClientLeftView            TeamspeakEvent = "notifyclientleftview"
+	NotifyServerEdited              TeamspeakEvent = "notifyserveredited"
+	NotifyChannelEdited             TeamspeakEvent = "notifychanneledited"
+	NotifyChannelDescriptionChanged TeamspeakEvent = "notifychanneldescriptionchanged"
+	NotifyClientMoved               TeamspeakEvent = "notifyclientmoved"
+	NotifyChannelCreated            TeamspeakEvent = "notifychannelcreated"
+	NotifyChannelDeleted            TeamspeakEvent = "notifychanneldeleted"
+	NotifyChannelMoved              TeamspeakEvent = "notifychannelmoved"
+	NotifyChannelPasswordChanged    TeamspeakEvent = "notifychannelpasswordchanged"
+	NotifyTokenUsed                 TeamspeakEvent = "notifytokenused"
 )
 
 func (c *TeamspeakHttpClient) StartEventClient(host, user, password string) error {

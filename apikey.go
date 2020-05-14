@@ -5,9 +5,9 @@ type ApiKeyScope string
 
 //noinspection GoUnusedConst
 const (
-	MANAGE ApiKeyScope = "manage"
-	WRITE  ApiKeyScope = "write"
-	READ   ApiKeyScope = "read"
+	ApiKeyScopeManage ApiKeyScope = "manage"
+	ApiKeyScopeWrite  ApiKeyScope = "write"
+	ApiKeyScopeRead   ApiKeyScope = "read"
 )
 
 type ApiKeyAddRequest struct {

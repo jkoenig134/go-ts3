@@ -1,5 +1,16 @@
 package go_ts3
 
+type PermissionGroupType int
+
+//noinspection GoUnusedConst
+const (
+	PermissionGroupTypeServerGroup   PermissionGroupType = 0
+	PermissionGroupTypeGlobalClient  PermissionGroupType = 1
+	PermissionGroupTypeChannel       PermissionGroupType = 2
+	PermissionGroupTypeChannelGroup  PermissionGroupType = 3
+	PermissionGroupTypeChannelClient PermissionGroupType = 4
+)
+
 // permfind `manage_scope, write_scope, read_scope`
 type permissionFindRequest struct {
 	PermissionId       int    `schema:"permid,omitempty"`

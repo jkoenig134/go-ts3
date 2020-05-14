@@ -432,8 +432,8 @@ type ClientKickReason int
 
 //noinspection GoUnusedConst
 const (
-	BLI ClientKickReason = 4
-	BLA ClientKickReason = 5
+	CKROne ClientKickReason = 4 //TODO?
+	CKRTwo ClientKickReason = 5
 )
 
 type ClientKickRequest struct {

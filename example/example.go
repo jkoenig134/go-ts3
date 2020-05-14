@@ -38,6 +38,19 @@ func init() {
 }
 
 func main() {
+	channelGroupList()
+}
+
+func channelGroupList() {
+	list, err := client.ServerGroupList()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	for _, cg := range *list {
+		fmt.Printf("%s %d\n", cg.Name, cg.Type)
+	}
 }
 
 //noinspection GoUnusedFunction
@@ -151,7 +164,7 @@ func clientInfo() {
 
 //noinspection GoUnusedFunction
 func event() {
-	err := client.SubscribeEvent(ts3.ClientMoved, func(v *ts3.ClientMovedEvent) {
+	err := client.SubscribeEvent(ts3.NotifyClientMoved, func(v *ts3.ClientMovedEvent) {
 		fmt.Printf("%+v\n", v)
 	})
 	if err != nil {
@@ -159,7 +172,7 @@ func event() {
 		return
 	}
 
-	err = client.SubscribeEvent(ts3.ClientEnterView, func(v *ts3.ClientEnterViewEvent) {
+	err = client.SubscribeEvent(ts3.NotifyClientEnterView, func(v *ts3.ClientEnterViewEvent) {
 		fmt.Printf("%+v\n", v)
 	})
 	if err != nil {
@@ -374,7 +387,7 @@ func token() {
 //noinspection GoUnusedFunction
 func apikeyadd() {
 	newKey, err := client.ApiKeyAdd(ts3.ApiKeyAddRequest{
-		Scope: ts3.MANAGE,
+		Scope: ts3.ApiKeyScopeManage,
 	})
 	if err != nil {
 		fmt.Println(err)
@@ -432,7 +445,7 @@ func gm() {
 //noinspection GoUnusedFunction
 func binding() {
 	bindings, err := client.BindingList(ts3.BindingListRequest{
-		Subsystem: ts3.VOICE,
+		Subsystem: ts3.SubsystemVoice,
 	})
 	if err != nil {
 		fmt.Println(err)
