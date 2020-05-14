@@ -75,6 +75,7 @@ func (cl *EventClient) login() error {
 
 func (cl *EventClient) handleEvent(event string) {
 	eventName, parameters := splitEvent(event)
+
 	switch eventName {
 	case "notifycliententerview":
 		cl.publishEvent(eventName, parameters, &ClientEnterViewEvent{})
@@ -123,12 +124,12 @@ func splitEvent(e string) (eventName string, values url.Values) {
 	parameters := split[1:]
 
 	values = url.Values{}
-	applyParameters(parameters, values)
+	applyParameters(parameters, &values)
 
 	return
 }
 
-func applyParameters(parameters []string, val url.Values) {
+func applyParameters(parameters []string, val *url.Values) {
 	for _, parameter := range parameters {
 		if strings.Contains(parameter, "|") {
 			splitArray := strings.Split(parameter, "|")
@@ -139,8 +140,8 @@ func applyParameters(parameters []string, val url.Values) {
 	}
 }
 
-func applyParameter(parameter string, val url.Values) {
-	splitParam := strings.SplitN(parameter, "=", 1)
+func applyParameter(parameter string, val *url.Values) {
+	splitParam := strings.SplitN(parameter, "=", 2)
 	if len(splitParam) == 2 {
 		val.Add(splitParam[0], splitParam[1])
 	}
