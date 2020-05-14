@@ -1,12 +1,18 @@
 package go_ts3
 
+import (
+	"fmt"
+	"strings"
+)
+
 // tokenadd `manage_scope, write_scope`
+// tokencustomset is currently not possible
 type TokenAddRequest struct {
 	TokenType        int    `schema:"tokentype"`
 	TokenMajorId     int    `schema:"tokenid1"`
 	TokenMinorId     int    `schema:"tokenid2"`
 	TokenDescription string `schema:"tokendescription"`
-	//TODO customset
+	TokenCustomSet   string `schema:"tokencustomset,omitempty"`
 }
 
 func NewGroupToken(serverGroupId int, description string) TokenAddRequest {
@@ -18,13 +24,43 @@ func NewGroupToken(serverGroupId int, description string) TokenAddRequest {
 	}
 }
 
-func NewChannelToken(channelGroupId int, channelId int, description string) TokenAddRequest {
+func NewCustomSetGroupToken(serverGroupId int, description string, customSet map[string]string) TokenAddRequest {
+	return TokenAddRequest{
+		TokenType:        0,
+		TokenMajorId:     serverGroupId,
+		TokenMinorId:     0,
+		TokenDescription: description,
+		TokenCustomSet:   generateCustomSet(customSet),
+	}
+}
+
+func NewChannelToken(channelGroupId, channelId int, description string) TokenAddRequest {
 	return TokenAddRequest{
 		TokenType:        1,
 		TokenMajorId:     channelGroupId,
 		TokenMinorId:     channelId,
 		TokenDescription: description,
 	}
+}
+
+func NewCustomSetChannelToken(channelGroupId, channelId int, description string, customSet map[string]string) TokenAddRequest {
+	return TokenAddRequest{
+		TokenType:        1,
+		TokenMajorId:     channelGroupId,
+		TokenMinorId:     channelId,
+		TokenDescription: description,
+		TokenCustomSet:   generateCustomSet(customSet),
+	}
+}
+
+func generateCustomSet(values map[string]string) string {
+	var entries []string
+
+	for ident, value := range values {
+		entries = append(entries, fmt.Sprintf("ident=%s value=%s", ident, value))
+	}
+
+	return strings.Join(entries, "\\p")
 }
 
 type TokenAddResponse struct {

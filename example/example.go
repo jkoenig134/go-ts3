@@ -41,6 +41,20 @@ func main() {
 }
 
 //noinspection GoUnusedFunction
+func customSetTokens() {
+	customSet := map[string]string{
+		"forumUser":  "asd bla",
+		"teamMember": "false",
+	}
+
+	channelToken := ts3.NewCustomSetChannelToken(1, 1, "Test", customSet)
+	fmt.Printf("%+v", channelToken)
+
+	groupToken := ts3.NewCustomSetGroupToken(1, "Test", customSet)
+	fmt.Printf("%+v", groupToken)
+}
+
+//noinspection GoUnusedFunction
 func channelPerm() {
 	list, err := client.ChannelList()
 	if err != nil {
