@@ -41,6 +41,28 @@ func main() {
 }
 
 //noinspection GoUnusedFunction
+func permissionOverview() {
+	overview, err := client.PermissionOverview(1, 34)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v", overview)
+}
+
+//noinspection GoUnusedFunction
+func permissions() {
+	list, err := client.PermissionList()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v", list)
+}
+
+//noinspection GoUnusedFunction
 func serverGroupsByClient() {
 	groupList, err := client.ServerGroupsByClientId(34)
 	if err != nil {

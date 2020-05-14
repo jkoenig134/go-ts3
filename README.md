@@ -24,7 +24,7 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 | instance | ✔ |
 | log | ✔ |
 | message | ✔ |
-| permission | ⚠ |
+| permission | ✔ |
 | privilegekey | ✔ |
 | querylogin | ✔ |
 | server | ✔ |
