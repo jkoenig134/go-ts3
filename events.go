@@ -43,7 +43,7 @@ type ClientEnterViewEvent struct {
 	ClientDescription                    string   `schema:"client_description"`
 	ClientIsTalker                       string   `schema:"client_is_talker"`
 	ClientIsPrioritySpeaker              string   `schema:"client_is_priority_speaker"`
-	ClientUnreadMessages                 []string `schema:"client_unread_messages "`
+	ClientUnreadMessages                 []string `schema:"client_unread_messages"`
 	ClientNicknamePhonetic               string   `schema:"client_nickname_phonetic"`
 	ClientNeededServerqueryViewPower     int      `schema:"client_needed_serverquery_view_power"`
 	ClientIconId                         string   `schema:"client_icon_id"`
@@ -51,6 +51,8 @@ type ClientEnterViewEvent struct {
 	ClientCountry                        string   `schema:"client_country"`
 	ClientChannelGroupInheritedChannelId string   `schema:"client_channel_group_inherited_channel_id"`
 	ClientBadges                         []string `schema:"client_badges"`
+	ClientIntegrations                   []string `schema:"client_integrations"`
+	ClientMyteamspeakId                  string   `schema:"client_myteamspeak_id"`
 }
 
 func (e *ClientEnterViewEvent) IsBot() bool {
