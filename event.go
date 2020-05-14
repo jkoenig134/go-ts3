@@ -1,7 +1,6 @@
 package go_ts3_http
 
 import (
-	"github.com/jkoenig134/go-ts3-http/rawevent"
 	"time"
 )
 
@@ -24,14 +23,14 @@ const (
 )
 
 func (c *TeamspeakHttpClient) StartEventClient(host, user, password string) error {
-	client, err := rawevent.Start(host, user, password, c.eventBus)
+	client, err := newEventClient(host, user, password, c.eventBus)
 	if err != nil {
 		return err
 	}
 
 	time.Sleep(2 * time.Second)
 
-	client.SwitchServer(c.serverID)
+	_ = client.SwitchServer(c.serverID)
 
 	c.eventClient = client
 

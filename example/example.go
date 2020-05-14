@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	ts3 "github.com/jkoenig134/go-ts3-http"
+	ts3 "github.com/jkoenig134/go-ts3"
 	"github.com/jkoenig134/schema"
 	"github.com/spf13/viper"
 	"net/url"
@@ -42,8 +42,8 @@ func main() {
 }
 
 func event() {
-	err := client.SubscribeEvent(ts3.ClientMoved, func(v interface{}) {
-		fmt.Println(v)
+	err := client.SubscribeEvent(ts3.ClientMoved, func(v ts3.ClientMovedEvent) {
+		fmt.Printf("%+v\n", v)
 	})
 	if err != nil {
 		fmt.Println(err)
