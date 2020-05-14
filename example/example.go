@@ -38,9 +38,49 @@ func init() {
 }
 
 func main() {
-	event()
 }
 
+//noinspection GoUnusedFunction
+func serverGroupsByClient() {
+	groupList, err := client.ServerGroupsByClientId(34)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v", groupList)
+}
+
+//noinspection GoUnusedFunction
+func serverGroups() {
+	groupList, err := client.ServerGroupList()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v", groupList)
+}
+
+//noinspection GoUnusedFunction
+func clientPerms() {
+	info, err := client.ClientStringPermissionList(34)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Printf("%+v", info)
+}
+
+//noinspection GoUnusedFunction
+func clientInfo() {
+	list, _ := client.ClientList()
+
+	info, _ := client.ClientInfo((*list)[0].ClientId)
+	fmt.Printf("%+v", info)
+}
+
+//noinspection GoUnusedFunction
 func event() {
 	err := client.SubscribeEvent(ts3.ClientMoved, func(v *ts3.ClientMovedEvent) {
 		fmt.Printf("%+v\n", v)
