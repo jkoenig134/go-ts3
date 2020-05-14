@@ -62,9 +62,58 @@ func (c *TeamspeakHttpClient) ChannelGroupList() (*[]ChannelGroup, error) {
 }
 
 // channelgrouppermlist `manage_scope, write_scope, read_scope`
-func (c *TeamspeakHttpClient) ChannelGroupPermissionList() error {
-	//TODO
-	return nil
+type channelGroupPermissionListRequest struct {
+	ChannelGroupId int  `schema:"cgid"`
+	AsString       bool `schema:"-permsid,omitempty"`
+}
+
+type ChannelGroupPermissionListResponse struct {
+	PermissionId      int `json:"permid"`
+	PermissionNegated int `json:"permnegated,string"`
+	PermissionSkip    int `json:"permskip,string"`
+	PermissionValue   int `json:"permvalue,string"`
+}
+
+func (c *TeamspeakHttpClient) ChannelGroupPermissionList(channelGroupId int) (*[]ChannelGroupPermissionListResponse, error) {
+	var perms []ChannelGroupPermissionListResponse
+
+	err := c.requestWithParams(
+		"channelgrouppermlist",
+		channelGroupPermissionListRequest{
+			ChannelGroupId: channelGroupId,
+		},
+		&perms,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &perms, nil
+}
+
+type ChannelGroupStringPermissionListResponse struct {
+	PermissionId      string `json:"permsid"`
+	PermissionNegated int    `json:"permnegated,string"`
+	PermissionSkip    int    `json:"permskip,string"`
+	PermissionValue   int    `json:"permvalue,string"`
+}
+
+func (c *TeamspeakHttpClient) ChannelGroupStringPermissionList(channelGroupId int) (*[]ChannelGroupStringPermissionListResponse, error) {
+	var perms []ChannelGroupStringPermissionListResponse
+
+	err := c.requestWithParams(
+		"channelgrouppermlist",
+		channelGroupPermissionListRequest{
+			ChannelGroupId: channelGroupId,
+			AsString:       true,
+		},
+		&perms,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &perms, nil
 }
 
 // channelgrouprename `manage_scope`
