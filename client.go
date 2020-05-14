@@ -61,14 +61,22 @@ func (c *TeamspeakHttpClient) ClientDbDelete(clientDbId int) error {
 }
 
 // clientdbedit `manage_scope, write_scope`
-func (c *TeamspeakHttpClient) ClientDbEdit() error {
-	//TODO
-	return nil
+type ClientDbEditRequest struct {
+	ClientDbId               int    `schema:"cldbid,required"`
+	ClientNickname           string `schema:"client_nickname"`
+	ClientIsTalker           string `schema:"client_is_talker"`
+	ClientDescription        string `schema:"client_description"`
+	ClientIsChannelCommander string `schema:"client_is_channel_commander"`
+	ClientIconID             string `schema:"client_icon_id"`
+}
+
+func (c *TeamspeakHttpClient) ClientDbEdit(request ClientDbEditRequest) error {
+	return c.requestWithParams("clientdbedit", request, nil)
 }
 
 // clientdbfind `manage_scope, write_scope, read_scope`
 type clientDbFindRequest struct {
-	IsUid   bool   `schema:"-uid"`
+	IsUid   bool   `schema:"-uid,omitempty"`
 	Pattern string `schema:"pattern"`
 }
 
@@ -168,15 +176,28 @@ func (c *TeamspeakHttpClient) ClientDbList(request ClientDbListRequest) (*[]DbCl
 }
 
 // clientdelperm `manage_scope`
-func (c *TeamspeakHttpClient) ClientDeletePermission() error {
-	//TODO
-	return nil
+type ClientDeletePermission struct {
+	ClientDbId int      `schema:"cldbid,required"`
+	PermId     []int    `schema:"permid"`
+	PermsId    []string `schema:"permsid"`
+}
+
+func (c *TeamspeakHttpClient) ClientDeletePermission(request ClientDeletePermission) error {
+	return c.requestWithParams("clientdelperm", request, nil)
 }
 
 // clientedit `manage_scope, write_scope`
-func (c *TeamspeakHttpClient) ClientEdit() error {
-	//TODO
-	return nil
+type ClientEditRequest struct {
+	ClientId                 int    `schema:"clid,required"`
+	ClientNickname           string `schema:"client_nickname"`
+	ClientIsTalker           string `schema:"client_is_talker"`
+	ClientDescription        string `schema:"client_description"`
+	ClientIsChannelCommander string `schema:"client_is_channel_commander"`
+	ClientIconID             string `schema:"client_icon_id"`
+}
+
+func (c *TeamspeakHttpClient) ClientEdit(request ClientEditRequest) error {
+	return c.requestWithParams("clientedit", request, nil)
 }
 
 // clientfind `manage_scope, write_scope, read_scope`
@@ -472,9 +493,58 @@ func (c *TeamspeakHttpClient) ClientMove(request ClientMoveRequest) error {
 }
 
 // clientpermlist `manage_scope, write_scope, read_scope`
-func (c *TeamspeakHttpClient) ClientPermissionList() error {
-	//TODO
-	return nil
+type clientPermissionListRequest struct {
+	ClientDbId int  `schema:"cldbid"`
+	AsString   bool `schema:"-permsid,omitempty"`
+}
+
+type ClientPermissionListResponse struct {
+	PermId      int `json:"permid,string"`
+	PermNegated int `json:"permnegated,string"`
+	PermSkip    int `json:"permskip,string"`
+	PermValue   int `json:"permvalue,string"`
+}
+
+func (c *TeamspeakHttpClient) ClientPermissionList(clientDbId int) (*[]ClientPermissionListResponse, error) {
+	var perms []ClientPermissionListResponse
+
+	err := c.requestWithParams(
+		"clientpermlist",
+		clientPermissionListRequest{
+			ClientDbId: clientDbId,
+		},
+		&perms,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &perms, nil
+}
+
+type ClientStringPermissionListResponse struct {
+	PermsId     string `json:"permsid"`
+	PermNegated int    `json:"permnegated,string"`
+	PermSkip    int    `json:"permskip,string"`
+	PermValue   int    `json:"permvalue,string"`
+}
+
+func (c *TeamspeakHttpClient) ClientStringPermissionList(clientDbId int) (*[]ClientStringPermissionListResponse, error) {
+	var perms []ClientStringPermissionListResponse
+
+	err := c.requestWithParams(
+		"clientpermlist",
+		clientPermissionListRequest{
+			ClientDbId: clientDbId,
+			AsString:   true,
+		},
+		&perms,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &perms, nil
 }
 
 // clientpoke `manage_scope, write_scope`
@@ -501,9 +571,16 @@ func (c *TeamspeakHttpClient) ClientSetServerQueryLogin(clientLoginName string) 
 }
 
 // clientupdate `manage_scope, write_scope`
-func (c *TeamspeakHttpClient) ClientUpdate() error {
-	//TODO
-	return nil
+type ClientUpdateRequest struct {
+	ClientNickname           string `schema:"client_nickname"`
+	ClientIsTalker           string `schema:"client_is_talker"`
+	ClientDescription        string `schema:"client_description"`
+	ClientIsChannelCommander string `schema:"client_is_channel_commander"`
+	ClientIconID             string `schema:"client_icon_id"`
+}
+
+func (c *TeamspeakHttpClient) ClientUpdate(request ClientUpdateRequest) error {
+	return c.requestWithParams("clientupdate", request, nil)
 }
 
 // setclientchannelgroup `manage_scope, write_scope`
