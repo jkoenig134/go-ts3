@@ -41,6 +41,25 @@ func main() {
 }
 
 //noinspection GoUnusedFunction
+func custom() {
+	err := client.CustomSet(34, "IGName", "Fancy Ingame Name")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	list, err := client.CustomInfo(34)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%+v", list)
+
+	err = client.CustomDelete(34, "IGName")
+}
+
+//noinspection GoUnusedFunction
 func permissionOverview() {
 	overview, err := client.PermissionOverview(1, 34)
 	if err != nil {

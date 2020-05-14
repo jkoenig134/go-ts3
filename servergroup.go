@@ -322,7 +322,6 @@ func (c *TeamspeakHttpClient) ServerGroupDeletePermission(request ServerGroupDel
 }
 
 // servergrouplist `manage_scope`
-
 type ServerGroup struct {
 	ServerGroupId   int             `json:"sgid,string"`
 	ServerGroupType ServerGroupType `json:"type,string"`

@@ -19,7 +19,7 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 | channelperm | ❌ |
 | client | ✔ |
 | complain | ✔ |
-| custom | ❌ |
+| custom | ✔ |
 | general | ✔ |
 | instance | ✔ |
 | log | ✔ |
