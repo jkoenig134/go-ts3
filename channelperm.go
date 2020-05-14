@@ -12,7 +12,7 @@ func (c *TeamspeakHttpClient) channelAddPermission(request channelAddPermissionR
 	return c.requestWithParams("channeladdperm", request, nil)
 }
 
-func (c *TeamspeakHttpClient) ChannelAddPermission(channelId int, permissionId int, permissionValue int) error {
+func (c *TeamspeakHttpClient) ChannelAddPermission(channelId, permissionId, permissionValue int) error {
 	return c.channelAddPermission(channelAddPermissionRequest{
 		ChannelId:       channelId,
 		PermissionId:    permissionId,
