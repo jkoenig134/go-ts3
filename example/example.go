@@ -41,6 +41,20 @@ func main() {
 }
 
 //noinspection GoUnusedFunction
+func channelPerm() {
+	list, err := client.ChannelList()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	channel := (*list)[0]
+
+	printIfNoError(client.ChannelPermissionList(channel.ChannelId))
+	printIfNoError(client.ChannelStringPermissionList(channel.ChannelId))
+}
+
+//noinspection GoUnusedFunction
 func custom() {
 	err := client.CustomSet(34, "IGName", "Fancy Ingame Name")
 	if err != nil {
