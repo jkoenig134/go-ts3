@@ -428,26 +428,34 @@ func (c *TeamspeakHttpClient) ClientInfo(clientId int) (*[]ClientInfo, error) {
 }
 
 // clientkick `manage_scope, write_scope`
-type ClientKickReason int
-
-//noinspection GoUnusedConst
-const (
-	CKROne ClientKickReason = 4 //TODO?
-	CKRTwo ClientKickReason = 5
-)
-
-type ClientKickRequest struct {
-	ClientId      []int            `schema:"clid,required"`
-	ReasonId      ClientKickReason `schema:"reasonid,required"`
-	ReasonMessage string           `schema:"reasonmsg,omitempty"`
+type clientKickRequest struct {
+	ClientId      []int  `schema:"clid,required"`
+	ReasonId      int    `schema:"reasonid,required"`
+	ReasonMessage string `schema:"reasonmsg,omitempty"`
 }
 
-func (c *TeamspeakHttpClient) ClientKick(request ClientKickRequest) error {
+func (c *TeamspeakHttpClient) clientKick(request clientKickRequest) error {
 	if len(request.ReasonMessage) > 40 {
 		return errors.New("the message must not have more than 40 characters")
 	}
 
 	return c.requestWithParams("clientkick", request, nil)
+}
+
+func (c *TeamspeakHttpClient) ClientKickChannel(clientIds []int, reasonMessage string) error {
+	return c.clientKick(clientKickRequest{
+		ClientId:      clientIds,
+		ReasonId:      4,
+		ReasonMessage: reasonMessage,
+	})
+}
+
+func (c *TeamspeakHttpClient) ClientKickServer(clientIds []int, reasonMessage string) error {
+	return c.clientKick(clientKickRequest{
+		ClientId:      clientIds,
+		ReasonId:      5,
+		ReasonMessage: reasonMessage,
+	})
 }
 
 // clientlist `manage_scope, write_scope, read_scope`
