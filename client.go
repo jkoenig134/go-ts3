@@ -491,10 +491,10 @@ type clientPermissionListRequest struct {
 }
 
 type ClientPermissionListResponse struct {
-	PermId      int `json:"permid,string"`
-	PermNegated int `json:"permnegated,string"`
-	PermSkip    int `json:"permskip,string"`
-	PermValue   int `json:"permvalue,string"`
+	PermissionId      int `json:"permid,string"`
+	PermissionNegated int `json:"permnegated,string"`
+	PermissionSkip    int `json:"permskip,string"`
+	PermissionValue   int `json:"permvalue,string"`
 }
 
 func (c *TeamspeakHttpClient) ClientPermissionList(clientDbId int) (*[]ClientPermissionListResponse, error) {
@@ -515,10 +515,10 @@ func (c *TeamspeakHttpClient) ClientPermissionList(clientDbId int) (*[]ClientPer
 }
 
 type ClientStringPermissionListResponse struct {
-	PermsId     string `json:"permsid"`
-	PermNegated int    `json:"permnegated,string"`
-	PermSkip    int    `json:"permskip,string"`
-	PermValue   int    `json:"permvalue,string"`
+	PermissionId      string `json:"permsid"`
+	PermissionNegated int    `json:"permnegated,string"`
+	PermissionSkip    int    `json:"permskip,string"`
+	PermissionValue   int    `json:"permvalue,string"`
 }
 
 func (c *TeamspeakHttpClient) ClientStringPermissionList(clientDbId int) (*[]ClientStringPermissionListResponse, error) {
