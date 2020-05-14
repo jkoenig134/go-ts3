@@ -42,7 +42,15 @@ func main() {
 }
 
 func event() {
-	err := client.SubscribeEvent(ts3.ClientMoved, func(v ts3.ClientMovedEvent) {
+	err := client.SubscribeEvent(ts3.ClientMoved, func(v *ts3.ClientMovedEvent) {
+		fmt.Printf("%+v\n", v)
+	})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	err = client.SubscribeEvent(ts3.ClientEnterView, func(v *ts3.ClientEnterViewEvent) {
 		fmt.Printf("%+v\n", v)
 	})
 	if err != nil {
