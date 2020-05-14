@@ -1,4 +1,4 @@
-module github.com/jkoenig134/go-ts3-http
+module github.com/jkoenig134/go-ts3
 
 go 1.14
 
