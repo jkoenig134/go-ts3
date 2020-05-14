@@ -1,4 +1,4 @@
-package go_ts3_http
+package go_ts3
 
 // servertemppasswordadd `manage_scope, write_scope`
 type serverTempPasswordAddRequest struct {

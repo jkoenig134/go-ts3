@@ -1,4 +1,4 @@
-package go_ts3_http
+package go_ts3
 
 // privilegekeyadd `manage_scope, write_scope`
 func (c *TeamspeakHttpClient) PrivilegekeyAdd(request TokenAddRequest) (*TokenAddResponse, error) {

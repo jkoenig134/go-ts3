@@ -1,4 +1,4 @@
-package go_ts3_http
+package go_ts3
 
 // apikeyadd `manage_scope`
 type ApiKeyScope string

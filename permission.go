@@ -1,4 +1,4 @@
-package go_ts3_http
+package go_ts3
 
 // permfind `manage_scope, write_scope, read_scope`
 type permissionFindRequest struct {

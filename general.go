@@ -1,4 +1,4 @@
-package go_ts3_http
+package go_ts3
 
 type HostInfo struct {
 	ConnectionBandwidthReceivedLastMinuteTotal int `json:"connection_bandwidth_received_last_minute_total,string"`

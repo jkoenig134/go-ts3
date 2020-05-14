@@ -1,4 +1,4 @@
-package go_ts3_http
+package go_ts3
 
 // queryloginadd `manage_scope, write_scope`
 type QueryloginAddResponse struct {

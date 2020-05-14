@@ -1,4 +1,4 @@
-package go_ts3_http
+package go_ts3
 
 func boolToInt(boolean bool) (integer int) {
 	if boolean {
