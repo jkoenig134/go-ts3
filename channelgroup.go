@@ -31,9 +31,28 @@ func (c *TeamspeakHttpClient) ChannelGroupDelete() error {
 }
 
 // channelgroupdelperm `manage_scope`
-func (c *TeamspeakHttpClient) ChannelGroupDeletePermission() error {
-	//TODO
-	return nil
+type channelGroupDeletePermissionRequest struct {
+	ChannelGroupId     int    `schema:"cgid"`
+	PermissionId       int    `schema:"permid,omitempty"`
+	StringPermissionId string `schema:"permsid,omitempty"`
+}
+
+func (c *TeamspeakHttpClient) channelGroupDeletePermission(request channelGroupDeletePermissionRequest) error {
+	return c.requestWithParams("channelgroupdelperm", request, nil)
+}
+
+func (c *TeamspeakHttpClient) ChannelGroupDeletePermission(channelGroupId, permissionId int) error {
+	return c.channelGroupDeletePermission(channelGroupDeletePermissionRequest{
+		ChannelGroupId: channelGroupId,
+		PermissionId:   permissionId,
+	})
+}
+
+func (c *TeamspeakHttpClient) ChannelGroupDeleteStringPermission(channelGroupId int, permissionId string) error {
+	return c.channelGroupDeletePermission(channelGroupDeletePermissionRequest{
+		ChannelGroupId:     channelGroupId,
+		StringPermissionId: permissionId,
+	})
 }
 
 // channelgrouplist `manage_scope, write_scope, read_scope`
