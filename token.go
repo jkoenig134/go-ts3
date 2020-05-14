@@ -3,8 +3,8 @@ package go_ts3_http
 // tokenadd `manage_scope, write_scope`
 type TokenAddRequest struct {
 	TokenType        int    `schema:"tokentype"`
-	TokenId1         int    `schema:"tokenid1"`
-	TokenId2         int    `schema:"tokenid2"`
+	TokenMajorId     int    `schema:"tokenid1"`
+	TokenMinorId     int    `schema:"tokenid2"`
 	TokenDescription string `schema:"tokendescription"`
 	//TODO customset
 }
@@ -12,8 +12,8 @@ type TokenAddRequest struct {
 func NewGroupToken(serverGroupId int, description string) TokenAddRequest {
 	return TokenAddRequest{
 		TokenType:        0,
-		TokenId1:         serverGroupId,
-		TokenId2:         0,
+		TokenMajorId:     serverGroupId,
+		TokenMinorId:     0,
 		TokenDescription: description,
 	}
 }
@@ -21,8 +21,8 @@ func NewGroupToken(serverGroupId int, description string) TokenAddRequest {
 func NewChannelToken(channelGroupId int, channelId int, description string) TokenAddRequest {
 	return TokenAddRequest{
 		TokenType:        1,
-		TokenId1:         channelGroupId,
-		TokenId2:         channelId,
+		TokenMajorId:     channelGroupId,
+		TokenMinorId:     channelId,
 		TokenDescription: description,
 	}
 }
