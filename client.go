@@ -3,9 +3,52 @@ package go_ts3_http
 import "errors"
 
 // clientaddperm `manage_scope`
-func (c *TeamspeakHttpClient) ClientAddPermission() error {
-	//TODO
-	return nil
+type clientAddPermissionRequest struct {
+	ClientDbId      int `schema:"cldbid"`
+	PermissionId    int `schema:"permid"`
+	PermissionValue int `schema:"permvalue"`
+	PermSkip        int `schema:"permskip"`
+}
+
+func (c *TeamspeakHttpClient) ClientAddPermission(clientDbId, permissionId, permissionValue int, permSkip bool) error {
+	permSkipInt := 0
+	if permSkip {
+		permSkipInt = 1
+	}
+	return c.requestWithParams(
+		"clientaddperm",
+		clientAddPermissionRequest{
+			ClientDbId:      clientDbId,
+			PermissionId:    permissionId,
+			PermissionValue: permissionValue,
+			PermSkip:        permSkipInt,
+		},
+		nil,
+	)
+}
+
+type clientAddStringPermissionRequest struct {
+	ClientDbId      int    `schema:"cldbid"`
+	PermissionName  string `schema:"permsid"`
+	PermissionValue int    `schema:"permvalue"`
+	PermSkip        int    `schema:"permskip"`
+}
+
+func (c *TeamspeakHttpClient) ClientAddStringPermission(clientDbId int, permissionName string, permissionValue int, permSkip bool) error {
+	permSkipInt := 0
+	if permSkip {
+		permSkipInt = 1
+	}
+	return c.requestWithParams(
+		"clientaddperm",
+		clientAddStringPermissionRequest{
+			ClientDbId:      clientDbId,
+			PermissionName:  permissionName,
+			PermissionValue: permissionValue,
+			PermSkip:        permSkipInt,
+		},
+		nil,
+	)
 }
 
 // clientdbdelete `manage_scope, write_scope`
@@ -24,9 +67,38 @@ func (c *TeamspeakHttpClient) ClientDbEdit() error {
 }
 
 // clientdbfind `manage_scope, write_scope, read_scope`
-func (c *TeamspeakHttpClient) ClientDbFind() error {
-	//TODO
-	return nil
+type clientDbFindRequest struct {
+	IsUid   bool   `schema:"-uid"`
+	Pattern string `schema:"pattern"`
+}
+
+type ClientDbFindResponse struct {
+	ClientDbId []int `json:"cldbid,string"`
+}
+
+func (c *TeamspeakHttpClient) clientDbFind(request clientDbFindRequest) (*[]ClientDbFindResponse, error) {
+	var clients []ClientDbFindResponse
+
+	err := c.requestWithParams("clientdbfind", request, &clients)
+	if err != nil {
+		return nil, err
+	}
+
+	return &clients, err
+}
+
+func (c *TeamspeakHttpClient) ClientDbFindName(pattern string) (*[]ClientDbFindResponse, error) {
+	return c.clientDbFind(clientDbFindRequest{
+		IsUid:   false,
+		Pattern: pattern,
+	})
+}
+
+func (c *TeamspeakHttpClient) ClientDbFindUid(uid int) (*[]ClientDbFindResponse, error) {
+	return c.clientDbFind(clientDbFindRequest{
+		IsUid:   true,
+		Pattern: string(uid),
+	})
 }
 
 // clientdbinfo `manage_scope, write_scope, read_scope`
@@ -257,9 +329,89 @@ func (c *TeamspeakHttpClient) ClientGetUidFromClientId(clientId int) (*clientGet
 }
 
 // clientinfo `manage_scope, write_scope, read_scope`
-func (c *TeamspeakHttpClient) ClientInfo() error {
-	//TODO
-	return nil
+type clientInfoRequest struct {
+	ClientId int `schema:"clid"`
+}
+
+type ClientInfo struct {
+	ClientId                                   int    `json:"cid,string"`
+	ClientAway                                 int    `json:"client_away,string"`
+	ClientAwayMessage                          string `json:"client_away_message"`
+	ClientBadges                               string `json:"client_badges"`
+	ClientBase64HashClientUID                  string `json:"client_base64HashClientUID"`
+	ClientChannelGroupID                       int    `json:"client_channel_group_id,string"`
+	ClientChannelGroupInheritedChannelID       int    `json:"client_channel_group_inherited_channel_id,string"`
+	ClientCountry                              string `json:"client_country"`
+	ClientCreated                              int    `json:"client_created,string"`
+	ClientDatabaseID                           int    `json:"client_database_id,string"`
+	ClientDefaultChannel                       string `json:"client_default_channel"`
+	ClientDefaultToken                         string `json:"client_default_token"`
+	ClientDescription                          string `json:"client_description"`
+	ClientFlagAvatar                           string `json:"client_flag_avatar"`
+	ClientIconID                               int    `json:"client_icon_id,string"`
+	ClientIdleTime                             int    `json:"client_idle_time,string"`
+	ClientInputHardware                        int    `json:"client_input_hardware,string"`
+	ClientInputMuted                           int    `json:"client_input_muted,string"`
+	ClientIntegrations                         string `json:"client_integrations"`
+	ClientIsChannelCommander                   int    `json:"client_is_channel_commander,string"`
+	ClientIsPrioritySpeaker                    int    `json:"client_is_priority_speaker,string"`
+	ClientIsRecording                          int    `json:"client_is_recording,string"`
+	ClientIsTalker                             int    `json:"client_is_talker,string"`
+	ClientLastconnected                        int    `json:"client_lastconnected,string"`
+	ClientLoginName                            string `json:"client_login_name"`
+	ClientMetaData                             string `json:"client_meta_data"`
+	ClientMonthBytesDownloaded                 int    `json:"client_month_bytes_downloaded,string"`
+	ClientMonthBytesUploaded                   int    `json:"client_month_bytes_uploaded,string"`
+	ClientMyteamspeakAvatar                    string `json:"client_myteamspeak_avatar"`
+	ClientMyteamspeakID                        string `json:"client_myteamspeak_id"`
+	ClientNeededServerqueryViewPower           int    `json:"client_needed_serverquery_view_power,string"`
+	ClientNickname                             string `json:"client_nickname"`
+	ClientNicknamePhonetic                     string `json:"client_nickname_phonetic"`
+	ClientOutputHardware                       int    `json:"client_output_hardware,string"`
+	ClientOutputMuted                          int    `json:"client_output_muted,string"`
+	ClientOutputonlyMuted                      int    `json:"client_outputonly_muted,string"`
+	ClientPlatform                             string `json:"client_platform"`
+	ClientSecurityHash                         string `json:"client_security_hash"`
+	ClientServergroups                         int    `json:"client_servergroups,string"`
+	ClientSignedBadges                         string `json:"client_signed_badges"`
+	ClientTalkPower                            int    `json:"client_talk_power,string"`
+	ClientTalkRequest                          int    `json:"client_talk_request,string"`
+	ClientTalkRequestMsg                       string `json:"client_talk_request_msg"`
+	ClientTotalBytesDownloaded                 int    `json:"client_total_bytes_downloaded,string"`
+	ClientTotalBytesUploaded                   int    `json:"client_total_bytes_uploaded,string"`
+	ClientTotalconnections                     int    `json:"client_totalconnections,string"`
+	ClientType                                 int    `json:"client_type,string"`
+	ClientUniqueIdentifier                     string `json:"client_unique_identifier"`
+	ClientUnreadMessages                       int    `json:"client_unread_messages,string"`
+	ClientVersion                              string `json:"client_version"`
+	ClientVersionSign                          string `json:"client_version_sign"`
+	ConnectionBandwidthReceivedLastMinuteTotal int    `json:"connection_bandwidth_received_last_minute_total,string"`
+	ConnectionBandwidthReceivedLastSecondTotal int    `json:"connection_bandwidth_received_last_second_total,string"`
+	ConnectionBandwidthSentLastMinuteTotal     int    `json:"connection_bandwidth_sent_last_minute_total,string"`
+	ConnectionBandwidthSentLastSecondTotal     int    `json:"connection_bandwidth_sent_last_second_total,string"`
+	ConnectionBytesReceivedTotal               int    `json:"connection_bytes_received_total,string"`
+	ConnectionBytesSentTotal                   int    `json:"connection_bytes_sent_total,string"`
+	ConnectionClientIP                         string `json:"connection_client_ip"`
+	ConnectionConnectedTime                    int    `json:"connection_connected_time,string"`
+	ConnectionFiletransferBandwidthReceived    int    `json:"connection_filetransfer_bandwidth_received,string"`
+	ConnectionFiletransferBandwidthSent        int    `json:"connection_filetransfer_bandwidth_sent,string"`
+	ConnectionPacketsReceivedTotal             int    `json:"connection_packets_received_total,string"`
+	ConnectionPacketsSentTotal                 int    `json:"connection_packets_sent_total,string"`
+}
+
+func (c *TeamspeakHttpClient) ClientInfo(clientId int) (*[]ClientInfo, error) {
+	var clients []ClientInfo
+
+	err := c.requestWithParams(
+		"clientinfo",
+		clientInfoRequest{ClientId: clientId},
+		&clients,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return &clients, nil
 }
 
 // clientkick `manage_scope, write_scope`
@@ -336,9 +488,16 @@ func (c *TeamspeakHttpClient) ClientPoke(clientId int, message string) error {
 }
 
 // clientsetserverquerylogin `manage_scope, write_scope`
-func (c *TeamspeakHttpClient) ClientSetServerQueryLogin() error {
-	//TODO
-	return nil
+type clientSetServerQueryLoginRequest struct {
+	ClientLoginName string `schema:"client_login_name"`
+}
+
+func (c *TeamspeakHttpClient) ClientSetServerQueryLogin(clientLoginName string) error {
+	return c.requestWithParams(
+		"clientsetserverquerylogin",
+		clientSetServerQueryLoginRequest{ClientLoginName: clientLoginName},
+		nil,
+	)
 }
 
 // clientupdate `manage_scope, write_scope`
@@ -348,7 +507,20 @@ func (c *TeamspeakHttpClient) ClientUpdate() error {
 }
 
 // setclientchannelgroup `manage_scope, write_scope`
-func (c *TeamspeakHttpClient) SetClientChannelGroup() error {
-	//TODO
-	return nil
+type setClientChannelGroupRequest struct {
+	ChannelGroupId int `schema:"cgid"`
+	ChannelId      int `schema:"cid"`
+	ClientDbId     int `schema:"cldbid"`
+}
+
+func (c *TeamspeakHttpClient) SetClientChannelGroup(channelGroupId, channelId, clientDbId int) error {
+	return c.requestWithParams(
+		"setclientchannelgroup",
+		setClientChannelGroupRequest{
+			ChannelGroupId: channelGroupId,
+			ChannelId:      channelId,
+			ClientDbId:     clientDbId,
+		},
+		nil,
+	)
 }
