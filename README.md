@@ -16,7 +16,7 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 | ban | ✔ |
 | channel | ✔ |
 | channelclientperm | ✔ |
-| channelgroup | ⚠ |
+| channelgroup | ✔ |
 | channelperm | ✔ |
 | client | ✔ |
 | complain | ✔ |
@@ -34,5 +34,5 @@ Endpoints as described in [here](https://community.teamspeak.com/t/webquery-disc
 | token | ✔ |
 
 ### TODO
-- [ ] implement all endpoints
+- [x] implement all endpoints
 - [x] implement an event system based on raw (until events for the http api gets announced)

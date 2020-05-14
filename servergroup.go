@@ -15,19 +15,19 @@ const (
 	ServerGroupTypeQueryAdmin      ServerGroupType = 50
 )
 
-type PermissionGroupDatabaseType int
+type GroupDatabaseType int
 
 //noinspection GoUnusedConst
 const (
-	PermissionGroupDatabaseTypeTemplate PermissionGroupDatabaseType = 0
-	PermissionGroupDatabaseTypeRegular  PermissionGroupDatabaseType = 1
-	PermissionGroupDatabaseTypeQuery    PermissionGroupDatabaseType = 2
+	GroupDatabaseTypeTemplate GroupDatabaseType = 0
+	GroupDatabaseTypeRegular  GroupDatabaseType = 1
+	GroupDatabaseTypeQuery    GroupDatabaseType = 2
 )
 
 // servergroupadd `manage_scope`
 type serverGroupAddRequest struct {
-	Name                string                      `schema:"name,required"`
-	PermissionGroupType PermissionGroupDatabaseType `schema:"type,omitempty"`
+	Name              string            `schema:"name,required"`
+	GroupDatabaseType GroupDatabaseType `schema:"type,omitempty"`
 }
 
 type serverGroupAddResponse struct {
@@ -53,8 +53,8 @@ func (c *TeamspeakHttpClient) ServerGroupAdd(name string) (*int, error) {
 	return c.serverGroupAdd(serverGroupAddRequest{Name: name})
 }
 
-func (c *TeamspeakHttpClient) ServerGroupAddWithType(name string, permissionGroupType PermissionGroupDatabaseType) (*int, error) {
-	return c.serverGroupAdd(serverGroupAddRequest{Name: name, PermissionGroupType: permissionGroupType})
+func (c *TeamspeakHttpClient) ServerGroupAddWithType(name string, groupType GroupDatabaseType) (*int, error) {
+	return c.serverGroupAdd(serverGroupAddRequest{Name: name, GroupDatabaseType: groupType})
 }
 
 // servergroupaddclient `manage_scope`
@@ -246,26 +246,26 @@ func (c *TeamspeakHttpClient) ServerGroupClientList(serverGroupId int) (*[]Serve
 
 // servergroupcopy `manage_scope`
 type serverGroupCopyRequest struct {
-	SourceGroupId       int                         `schema:"ssgid"`
-	TargetGroupId       int                         `schema:"tsgid"`
-	Name                string                      `schema:"name"`
-	PermissionGroupType PermissionGroupDatabaseType `schema:"type"`
+	SourceGroupId int               `schema:"ssgid"`
+	TargetGroupId int               `schema:"tsgid"`
+	Name          string            `schema:"name"`
+	Type          GroupDatabaseType `schema:"type"`
 }
 
 type serverGroupCopyResponse struct {
 	ServerGroupId int `json:"sgid,string"`
 }
 
-func (c *TeamspeakHttpClient) ServerGroupCopy(sourceGroupId, targetGroupId int, name string, permissionGroupType PermissionGroupDatabaseType) (*int, error) {
+func (c *TeamspeakHttpClient) ServerGroupCopy(sourceGroupId, targetGroupId int, name string, groupType GroupDatabaseType) (*int, error) {
 	var ids []serverGroupCopyResponse
 
 	err := c.requestWithParams(
 		"servergroupcopy",
 		serverGroupCopyRequest{
-			SourceGroupId:       sourceGroupId,
-			TargetGroupId:       targetGroupId,
-			Name:                name,
-			PermissionGroupType: permissionGroupType,
+			SourceGroupId: sourceGroupId,
+			TargetGroupId: targetGroupId,
+			Name:          name,
+			Type:          groupType,
 		},
 		&ids,
 	)
@@ -323,16 +323,16 @@ func (c *TeamspeakHttpClient) ServerGroupDeletePermission(request ServerGroupDel
 
 // servergrouplist `manage_scope`
 type ServerGroup struct {
-	ServerGroupId  int                         `json:"sgid,string"`
-	Type           PermissionGroupDatabaseType `json:"type,string"`
-	Name           string                      `json:"name"`
-	NameMode       int                         `json:"namemode,string"`
-	IconId         int                         `json:"iconid,string"`
-	NMemberAddp    int                         `json:"n_member_addp,string"`
-	NMemberRemovep int                         `json:"n_member_removep,string"`
-	NModifyp       int                         `json:"n_modifyp,string"`
-	SaveDb         int                         `json:"savedb,string"`
-	SortId         int                         `json:"sortid,string"`
+	ServerGroupId  int               `json:"sgid,string"`
+	Type           GroupDatabaseType `json:"type,string"`
+	Name           string            `json:"name"`
+	NameMode       int               `json:"namemode,string"`
+	IconId         int               `json:"iconid,string"`
+	NMemberAddp    int               `json:"n_member_addp,string"`
+	NMemberRemovep int               `json:"n_member_removep,string"`
+	NModifyp       int               `json:"n_modifyp,string"`
+	SaveDb         int               `json:"savedb,string"`
+	SortId         int               `json:"sortid,string"`
 }
 
 func (c *TeamspeakHttpClient) ServerGroupList() (*[]ServerGroup, error) {

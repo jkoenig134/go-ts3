@@ -41,16 +41,26 @@ func main() {
 	channelGroupList()
 }
 
+//noinspection GoUnusedFunction
 func channelGroupList() {
-	list, err := client.ServerGroupList()
+	list, err := client.ChannelGroupList()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
 	for _, cg := range *list {
-		fmt.Printf("%s %d\n", cg.Name, cg.Type)
+		fmt.Printf("%s %d\n", cg.Name, cg.ChannelGroupId)
 	}
+
+	clientList, err := client.ChannelGroupClientList(ts3.ChannelGroupClientListRequest{
+		GroupId: 32,
+	})
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Printf("%+v", clientList)
 }
 
 //noinspection GoUnusedFunction
