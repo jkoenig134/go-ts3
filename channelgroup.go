@@ -25,9 +25,16 @@ func (c *TeamspeakHttpClient) ChannelGroupCopy() error {
 }
 
 // channelgroupdel `manage_scope`
-func (c *TeamspeakHttpClient) ChannelGroupDelete() error {
-	//TODO
-	return nil
+type channelGroupDeleteRequest struct {
+	ChannelGroupId int `schema:"cgid"`
+	Force          int `schema:"force"`
+}
+
+func (c *TeamspeakHttpClient) ChannelGroupDelete(channelGroupId int, force bool) error {
+	return c.requestWithParams("channelgroupdel", channelGroupDeleteRequest{
+		ChannelGroupId: channelGroupId,
+		Force:          boolToInt(force),
+	}, nil)
 }
 
 // channelgroupdelperm `manage_scope`
