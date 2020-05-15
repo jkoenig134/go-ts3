@@ -186,10 +186,15 @@ type ChannelDeletedEvent struct {
 type ClientMovedEvent struct {
 	TargetChannelId int           `schema:"ctid"`
 	ReasonId        EventReasonId `schema:"reasonid"`
+	ReasonMessage   string        `schema:"reasonmsg"`
 	InvokerId       int           `schema:"invokerid"`
 	InvokerName     string        `schema:"invokername"`
 	InvokerUid      string        `schema:"invokeruid"`
 	ClientId        []int         `schema:"clid"`
+}
+
+func (e *ClientMovedEvent) WasKicked() bool {
+	return e.ReasonId == EventReasonChannelKick
 }
 
 // notifytextmessage
