@@ -110,7 +110,10 @@ func (cl *EventClient) handleEvent(event string) {
 func (cl *EventClient) publishEvent(eventName string, parameters url.Values, v interface{}) {
 	err := cl.decoder.Decode(v, parameters)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Printf(
+			"Decoding Failed\nevent %s\nparams: %s\nerror:%s",
+			eventName, parameters.Encode(), err.Error(),
+		)
 		return
 	}
 
