@@ -67,7 +67,7 @@ type ClientLeftViewEvent struct {
 	InvokerId       int           `schema:"invokerid"`
 	InvokerName     string        `schema:"invokername"`
 	InvokerUid      string        `schema:"invokeruid"`
-	ReasonMessage   int           `schema:"reasonmsg"`
+	ReasonMessage   string        `schema:"reasonmsg"`
 	BanTime         int           `schema:"bantime"`
 	ClientId        int           `schema:"clid"`
 }
