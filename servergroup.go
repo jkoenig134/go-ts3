@@ -235,7 +235,7 @@ func (c *TeamspeakHttpClient) ServerGroupClientList(serverGroupId int) (*[]Serve
 			ServerGroupId: serverGroupId,
 			Names:         true,
 		},
-		nil,
+		&clients,
 	)
 	if err != nil {
 		return nil, err
