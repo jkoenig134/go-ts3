@@ -1,6 +1,7 @@
 package go_ts3
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"github.com/asaskevich/EventBus"
@@ -38,6 +39,9 @@ func (c *TeamspeakHttpClient) SetServerID(serverID int) {
 }
 
 func (c *TeamspeakHttpClient) SetInsecure(allowInsecure bool) {
+	if c.httpClient.TLSConfig == nil {
+		c.httpClient.TLSConfig = &tls.Config{}
+	}
 	c.httpClient.TLSConfig.InsecureSkipVerify = allowInsecure
 }
 
