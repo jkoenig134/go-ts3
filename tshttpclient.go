@@ -37,6 +37,10 @@ func (c *TeamspeakHttpClient) SetServerID(serverID int) {
 	}
 }
 
+func (c *TeamspeakHttpClient) SetInsecure(allowInsecure bool) {
+	c.httpClient.TLSConfig.InsecureSkipVerify = allowInsecure
+}
+
 func NewClient(config Config) TeamspeakHttpClient {
 	return TeamspeakHttpClient{
 		config,
