@@ -382,7 +382,7 @@ func (original *ServerSnapshot) AsDeployRequest(password *string, mapping bool, 
 
 type ServerSnapshotDeployRequest struct {
 	Data      string `schema:"data,required"`
-	Salt      string `schema:"salt,required"`
+	Salt      string `schema:"salt,omitempty"`
 	Version   int    `schema:"version,required"`
 	Password  string `schema:"password,omitempty"`
 	Mapping   bool   `schema:"-mapping,omitempty"`
